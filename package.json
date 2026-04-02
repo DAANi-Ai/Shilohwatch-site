@@ -1,0 +1,10 @@
+{
+  "name": "shilohwatch-site",
+  "version": "1.0.0",
+  "scripts": {
+    "start": "npx serve public -l $PORT"
+  },
+  "dependencies": {
+    "serve": "^14.2.0"
+  }
+}

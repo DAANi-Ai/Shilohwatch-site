@@ -1,0 +1,846 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Shiloh Watch | Your AI Watchman</title>
+<meta name="description" content="AI-powered trading analysis tool. Smart Money Concepts, multi-timeframe confluence scoring, walk-forward backtesting. 20 markets. Your AI watchman.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Cormorant+Garamond:ital,wght@0,400;0,500;1,400&family=Manrope:wght@200;300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; -webkit-font-smoothing: antialiased; }
+  ::selection { background: rgba(212, 188, 120, 0.3); color: inherit; }
+
+  :root {
+    --deep: #091A12;
+    --navy: #0C2E1F;
+    --green: #0A3D2E;
+    --green-mid: #1A6B4A;
+    --green-light: #E8F5E9;
+    --gold: #D4BC78;
+    --gold-light: #E0CFA0;
+    --cream: #FAF8F4;
+    --cream-warm: #F5F0E8;
+    --stone: #E8E3DA;
+    --charcoal: #1C1C1C;
+    --slate: #6B7280;
+    --sage: #98AC8A;
+  }
+
+  body {
+    font-family: 'Manrope', system-ui, sans-serif;
+    background: var(--cream);
+    color: var(--charcoal);
+    overflow-x: hidden;
+  }
+
+  .font-display { font-family: 'Playfair Display', Georgia, serif; }
+  .font-accent { font-family: 'Cormorant Garamond', Georgia, serif; }
+  .font-body { font-family: 'Manrope', system-ui, sans-serif; }
+  .label { font-size: 10px; font-weight: 500; text-transform: uppercase; letter-spacing: 0.3em; color: var(--gold); }
+
+  .container { max-width: 1200px; margin: 0 auto; padding: 0 24px; }
+  @media (min-width: 768px) { .container { padding: 0 48px; } }
+
+  /* ── Reveal animations ── */
+  .reveal { opacity: 0; transform: translateY(28px); transition: all 0.9s cubic-bezier(0.16, 1, 0.3, 1); }
+  .reveal.visible { opacity: 1; transform: translateY(0); }
+  .reveal-d1 { transition-delay: 0.1s; }
+  .reveal-d2 { transition-delay: 0.2s; }
+  .reveal-d3 { transition-delay: 0.3s; }
+  .reveal-d4 { transition-delay: 0.4s; }
+  .reveal-d5 { transition-delay: 0.5s; }
+
+  /* ── Electric shimmer text ── */
+  .electric-text {
+    color: var(--green);
+    position: relative;
+    background: linear-gradient(90deg, #0A3D2E 0%, #0A3D2E 40%, #D4BC78 50%, #0A3D2E 60%, #0A3D2E 100%);
+    background-size: 200% 100%;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    animation: electric-shimmer 3s ease-in-out infinite;
+  }
+  @keyframes electric-shimmer {
+    0%, 100% { background-position: 100% 0; }
+    50% { background-position: -100% 0; }
+  }
+
+  /* ── Grain texture ── */
+  body::after {
+    content: ''; position: fixed; inset: 0; z-index: 9999; pointer-events: none; opacity: 0.018;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+  }
+
+  /* ── Pulse / glow keyframes ── */
+  @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.3; } }
+  @keyframes scrollPulse { 0%, 100% { opacity: 1; transform: scaleY(1); } 50% { opacity: 0.4; transform: scaleY(0.85); } }
+  @keyframes float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-8px); } }
+  @keyframes fadeFloat { 0%, 100% { opacity: 0.06; transform: translateY(0) scale(1); } 50% { opacity: 0.12; transform: translateY(-20px) scale(1.05); } }
+
+  /* ── Lighthouse beam rotation ── */
+  @keyframes beamRotate {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+  }
+  @keyframes beaconPulse {
+    0%, 100% { opacity: 0.7; filter: blur(0px); }
+    50% { opacity: 1; filter: blur(2px); }
+  }
+
+  /* ── Stat cards ── */
+  .stat-card {
+    background: rgba(255,255,255,0.04);
+    backdrop-filter: blur(12px);
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 16px;
+    padding: 32px;
+    text-align: center;
+    transition: all 0.4s ease;
+  }
+  .stat-card:hover {
+    border-color: rgba(212, 188, 120, 0.3);
+    transform: translateY(-4px);
+    box-shadow: 0 20px 60px rgba(0,0,0,0.2);
+  }
+
+  /* ── Feature cards ── */
+  .feature-card {
+    background: var(--cream);
+    border: 1px solid var(--stone);
+    border-radius: 16px;
+    padding: 36px 28px;
+    transition: all 0.4s ease;
+    position: relative;
+    overflow: hidden;
+  }
+  .feature-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0;
+    width: 3px; height: 0;
+    background: var(--gold);
+    transition: height 0.4s ease;
+  }
+  .feature-card:hover::before { height: 100%; }
+  .feature-card:hover {
+    border-color: var(--gold);
+    box-shadow: 0 16px 48px rgba(0, 0, 0, 0.06);
+    transform: translateY(-2px);
+  }
+
+  /* ── Pricing cards ── */
+  .price-card {
+    background: white;
+    border: 1px solid var(--stone);
+    border-radius: 16px;
+    padding: 36px 28px;
+    transition: all 0.4s ease;
+    display: flex;
+    flex-direction: column;
+  }
+  .price-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 20px 60px rgba(0,0,0,0.08);
+  }
+  .price-popular {
+    border: 2px solid var(--green);
+    position: relative;
+  }
+  .price-founding {
+    border: 1px solid var(--gold);
+    background: #FDFBF5;
+    position: relative;
+  }
+
+  @keyframes foundingPulse {
+    0%, 100% { box-shadow: 0 0 0 0 rgba(212, 188, 120, 0.4); }
+    50% { box-shadow: 0 0 0 8px rgba(212, 188, 120, 0); }
+  }
+
+  /* ── Counter animation ── */
+  .counter { display: inline-block; }
+
+  /* ── Floating particles (hero) ── */
+  .particle {
+    position: absolute;
+    border-radius: 50%;
+    pointer-events: none;
+    animation: fadeFloat 6s ease-in-out infinite;
+  }
+
+  /* ── Nav ── */
+  .nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    transition: all 0.4s ease;
+  }
+  .nav.scrolled {
+    background: rgba(250, 248, 244, 0.95);
+    backdrop-filter: blur(20px);
+    border-bottom: 1px solid var(--stone);
+  }
+  .nav-inner {
+    max-width: 1200px; margin: 0 auto; padding: 0 24px;
+    height: 72px; display: flex; align-items: center; justify-content: space-between;
+  }
+  @media (min-width: 768px) { .nav-inner { padding: 0 48px; height: 80px; } }
+
+  .nav-links { display: none; gap: 40px; }
+  @media (min-width: 768px) { .nav-links { display: flex; } }
+  .nav-links a {
+    font-size: 12px; font-weight: 400; letter-spacing: 0.08em;
+    color: var(--slate); text-decoration: none; transition: color 0.3s;
+  }
+  .nav-links a:hover { color: var(--green); }
+
+  .mobile-toggle {
+    display: flex; flex-direction: column; gap: 5px; padding: 8px;
+    cursor: pointer; background: none; border: none;
+  }
+  @media (min-width: 768px) { .mobile-toggle { display: none; } }
+  .mobile-toggle span { display: block; width: 22px; height: 1.5px; background: var(--charcoal); opacity: 0.5; transition: all 0.3s; }
+
+  .mobile-menu {
+    display: none; position: fixed; inset: 0; background: var(--deep); z-index: 99;
+    flex-direction: column; justify-content: center; align-items: center; gap: 32px;
+  }
+  .mobile-menu.open { display: flex; }
+  .mobile-menu a { font-family: 'Playfair Display', serif; font-size: 28px; color: var(--cream); text-decoration: none; transition: color 0.3s; }
+  .mobile-menu a:hover { color: var(--gold); }
+  .mobile-close { position: absolute; top: 24px; right: 24px; font-size: 28px; color: var(--cream); background: none; border: none; cursor: pointer; }
+
+  /* ── Waitlist form ── */
+  .waitlist-input {
+    background: rgba(255,255,255,0.08);
+    border: 1px solid rgba(255,255,255,0.15);
+    border-radius: 0;
+    padding: 16px 24px;
+    font-size: 15px;
+    font-family: 'Manrope', sans-serif;
+    font-weight: 300;
+    color: var(--cream);
+    outline: none;
+    transition: border-color 0.3s;
+    width: 100%;
+  }
+  .waitlist-input:focus { border-color: var(--gold); }
+  .waitlist-input::placeholder { color: rgba(250, 248, 244, 0.3); }
+
+  .btn-gold {
+    display: inline-block; padding: 16px 40px;
+    background: var(--gold); color: var(--deep);
+    font-size: 13px; font-weight: 500; letter-spacing: 0.08em;
+    text-decoration: none; border: none; cursor: pointer; transition: all 0.3s;
+  }
+  .btn-gold:hover { background: var(--gold-light); transform: translateY(-1px); box-shadow: 0 8px 30px rgba(212, 188, 120, 0.2); }
+
+  .btn-outline-light {
+    display: inline-block; padding: 14px 36px;
+    background: transparent; color: var(--cream);
+    font-size: 13px; font-weight: 400; letter-spacing: 0.08em;
+    text-decoration: none; border: 1px solid rgba(250, 248, 244, 0.2); cursor: pointer; transition: all 0.3s;
+  }
+  .btn-outline-light:hover { border-color: var(--gold); color: var(--gold); }
+
+  /* ── Gold rule ── */
+  .gold-rule { width: 48px; height: 1.5px; background: var(--gold); }
+
+  /* ── Responsive ── */
+  @media (max-width: 767px) {
+    .hero-heading { font-size: 42px !important; }
+    .grid-3 { grid-template-columns: 1fr !important; }
+    .grid-4 { grid-template-columns: 1fr !important; }
+    .grid-2 { grid-template-columns: 1fr !important; }
+    .stat-grid { grid-template-columns: 1fr 1fr !important; }
+    .watchtower-desktop { display: none !important; }
+    section { padding-top: 64px !important; padding-bottom: 64px !important; }
+    .container { padding: 0 20px !important; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ════════════════════════════ NAV ════════════════════════════ -->
+<nav class="nav" id="nav">
+  <div class="nav-inner">
+    <a href="#" style="text-decoration: none; display: flex; align-items: center; gap: 10px;">
+      <div style="width: 36px; height: 36px; background: var(--gold); border-radius: 4px; display: flex; align-items: center; justify-content: center;">
+        <svg width="20" height="20" viewBox="0 0 32 32" fill="none">
+          <rect x="11" y="12" width="10" height="18" rx="1" stroke="#091A12" stroke-width="1.8" fill="none"/>
+          <rect x="13" y="6" width="6" height="6" rx="0.5" stroke="#091A12" stroke-width="1.5" fill="none"/>
+          <line x1="16" y1="6" x2="16" y2="3" stroke="#091A12" stroke-width="1.5"/>
+          <circle cx="16" cy="2" r="1.5" fill="#091A12"/>
+          <line x1="8" y1="30" x2="11" y2="12" stroke="#091A12" stroke-width="1" opacity="0.5"/>
+          <line x1="24" y1="30" x2="21" y2="12" stroke="#091A12" stroke-width="1" opacity="0.5"/>
+          <rect x="13.5" y="16" width="2" height="3" rx="0.3" fill="#091A12" opacity="0.3"/>
+          <rect x="16.5" y="16" width="2" height="3" rx="0.3" fill="#091A12" opacity="0.3"/>
+          <rect x="13.5" y="22" width="2" height="3" rx="0.3" fill="#091A12" opacity="0.3"/>
+          <rect x="16.5" y="22" width="2" height="3" rx="0.3" fill="#091A12" opacity="0.3"/>
+        </svg>
+      </div>
+      <span class="font-display" style="font-size: 20px; color: var(--charcoal); font-weight: 500; letter-spacing: -0.02em;">Shiloh Watch</span>
+    </a>
+
+    <div class="nav-links">
+      <a href="#features">Features</a>
+      <a href="#results">Results</a>
+      <a href="#pricing">Pricing</a>
+    </div>
+
+    <div style="display: flex; align-items: center; gap: 16px;">
+      <a href="#waitlist" class="btn-gold" style="padding: 10px 28px; font-size: 12px;">Join Waitlist</a>
+      <button class="mobile-toggle" id="mobileToggle" aria-label="Menu">
+        <span></span><span></span><span style="width: 14px; margin-left: auto;"></span>
+      </button>
+    </div>
+  </div>
+</nav>
+
+<!-- Mobile Menu -->
+<div class="mobile-menu" id="mobileMenu">
+  <button class="mobile-close" id="mobileClose" aria-label="Close">&times;</button>
+  <a href="#features" onclick="closeMobile()">Features</a>
+  <a href="#results" onclick="closeMobile()">Results</a>
+  <a href="#pricing" onclick="closeMobile()">Pricing</a>
+  <a href="#waitlist" onclick="closeMobile()">Join Waitlist</a>
+</div>
+
+<!-- ════════════════════════════ HERO ════════════════════════════ -->
+<section style="min-height: 100vh; background: var(--cream); position: relative; display: flex; flex-direction: column; justify-content: center; overflow: hidden;">
+
+  <!-- Ambient radial glows -->
+  <div style="position: absolute; top: -20%; right: -15%; width: 800px; height: 800px; background: radial-gradient(circle, rgba(10, 61, 46, 0.04) 0%, transparent 70%); border-radius: 50%; pointer-events: none;"></div>
+  <div style="position: absolute; bottom: -10%; left: -10%; width: 500px; height: 500px; background: radial-gradient(circle, rgba(212, 188, 120, 0.06) 0%, transparent 70%); border-radius: 50%; pointer-events: none;"></div>
+
+  <!-- Floating particles -->
+  <div class="particle" style="top: 15%; left: 20%; width: 4px; height: 4px; background: var(--green); opacity: 0.15; animation-delay: 0s;"></div>
+  <div class="particle" style="top: 30%; left: 70%; width: 3px; height: 3px; background: var(--gold); opacity: 0.2; animation-delay: 1.5s;"></div>
+  <div class="particle" style="top: 60%; left: 15%; width: 5px; height: 5px; background: var(--green); opacity: 0.1; animation-delay: 3s;"></div>
+  <div class="particle" style="top: 75%; left: 80%; width: 3px; height: 3px; background: var(--gold); opacity: 0.15; animation-delay: 4.5s;"></div>
+  <div class="particle" style="top: 45%; left: 50%; width: 2px; height: 2px; background: var(--green); opacity: 0.08; animation-delay: 2s;"></div>
+
+  <!-- Watchtower (desktop right side) -->
+  <div class="watchtower-desktop" style="position: absolute; right: 80px; top: 50%; transform: translateY(-50%); pointer-events: none;" aria-hidden="true">
+    <svg width="260" height="520" viewBox="0 0 260 520" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <!-- Rotating beam of light -->
+      <g style="transform-origin: 130px 58px; animation: beamRotate 8s linear infinite;">
+        <defs>
+          <linearGradient id="beam1" x1="130" y1="58" x2="0" y2="-80" gradientUnits="userSpaceOnUse">
+            <stop offset="0%" stop-color="#D4BC78" stop-opacity="0.5"/>
+            <stop offset="100%" stop-color="#D4BC78" stop-opacity="0"/>
+          </linearGradient>
+          <linearGradient id="beam2" x1="130" y1="58" x2="260" y2="-80" gradientUnits="userSpaceOnUse">
+            <stop offset="0%" stop-color="#D4BC78" stop-opacity="0.3"/>
+            <stop offset="100%" stop-color="#D4BC78" stop-opacity="0"/>
+          </linearGradient>
+        </defs>
+        <!-- Primary beam cone -->
+        <path d="M130 58 L70 -60 L130 -30 L190 -60 Z" fill="url(#beam1)" opacity="0.4"/>
+        <!-- Secondary softer beam -->
+        <path d="M130 58 L50 -40 L60 -60 L130 58 Z" fill="#D4BC78" opacity="0.06"/>
+        <path d="M130 58 L200 -40 L190 -60 L130 58 Z" fill="#D4BC78" opacity="0.06"/>
+        <!-- Light scatter -->
+        <ellipse cx="130" cy="-20" rx="80" ry="30" fill="#D4BC78" opacity="0.03"/>
+      </g>
+
+      <!-- Beacon glow (stays stationary) -->
+      <circle cx="130" cy="58" r="12" fill="#D4BC78" opacity="0.15" style="animation: beaconPulse 2s ease-in-out infinite;"/>
+      <circle cx="130" cy="58" r="7" fill="#D4BC78" opacity="0.4" style="animation: beaconPulse 2s ease-in-out infinite; animation-delay: 0.3s;"/>
+      <circle cx="130" cy="58" r="3" fill="#D4BC78" opacity="0.9"/>
+
+      <!-- Roof / peaked cap -->
+      <polygon points="95,72 130,42 165,72" stroke="rgba(10,61,46,0.2)" stroke-width="1.2" fill="rgba(10,61,46,0.03)"/>
+      <line x1="130" y1="42" x2="130" y2="30" stroke="rgba(250,248,244,0.3)" stroke-width="1.2"/>
+
+      <!-- Observation deck -->
+      <rect x="92" y="72" width="76" height="38" rx="2" stroke="rgba(10,61,46,0.15)" stroke-width="1" fill="rgba(10,61,46,0.02)"/>
+      <!-- Deck windows (3 arched) -->
+      <rect x="100" y="78" width="14" height="18" rx="7 7 0 0" stroke="rgba(10,61,46,0.12)" stroke-width="0.8" fill="rgba(212,188,120,0.04)"/>
+      <rect x="123" y="78" width="14" height="18" rx="7 7 0 0" stroke="rgba(10,61,46,0.12)" stroke-width="0.8" fill="rgba(212,188,120,0.04)"/>
+      <rect x="146" y="78" width="14" height="18" rx="7 7 0 0" stroke="rgba(10,61,46,0.12)" stroke-width="0.8" fill="rgba(212,188,120,0.04)"/>
+      <!-- Deck balustrade -->
+      <line x1="82" y1="110" x2="178" y2="110" stroke="rgba(10,61,46,0.15)" stroke-width="1"/>
+      <line x1="82" y1="110" x2="82" y2="115" stroke="rgba(10,61,46,0.12)" stroke-width="0.8"/>
+      <line x1="100" y1="110" x2="100" y2="115" stroke="rgba(10,61,46,0.1)" stroke-width="0.8"/>
+      <line x1="118" y1="110" x2="118" y2="115" stroke="rgba(10,61,46,0.1)" stroke-width="0.8"/>
+      <line x1="142" y1="110" x2="142" y2="115" stroke="rgba(10,61,46,0.1)" stroke-width="0.8"/>
+      <line x1="160" y1="110" x2="160" y2="115" stroke="rgba(10,61,46,0.1)" stroke-width="0.8"/>
+      <line x1="178" y1="110" x2="178" y2="115" stroke="rgba(10,61,46,0.12)" stroke-width="0.8"/>
+
+      <!-- Main tower shaft -->
+      <rect x="100" y="118" width="60" height="260" rx="1" stroke="rgba(10,61,46,0.12)" stroke-width="1" fill="rgba(10,61,46,0.02)"/>
+      <!-- Tapered buttress lines -->
+      <line x1="88" y1="378" x2="100" y2="118" stroke="rgba(10,61,46,0.06)" stroke-width="0.8"/>
+      <line x1="172" y1="378" x2="160" y2="118" stroke="rgba(10,61,46,0.06)" stroke-width="0.8"/>
+
+      <!-- Tower windows (5 rows, alternating) -->
+      <rect x="114" y="138" width="14" height="20" rx="7 7 0 0" stroke="rgba(10,61,46,0.1)" stroke-width="0.7" fill="rgba(212,188,120,0.03)"/>
+      <rect x="132" y="138" width="14" height="20" rx="7 7 0 0" stroke="rgba(10,61,46,0.1)" stroke-width="0.7" fill="rgba(212,188,120,0.03)"/>
+      <rect x="122" y="180" width="16" height="22" rx="8 8 0 0" stroke="rgba(10,61,46,0.08)" stroke-width="0.7" fill="rgba(212,188,120,0.02)"/>
+      <rect x="114" y="224" width="14" height="20" rx="7 7 0 0" stroke="rgba(10,61,46,0.08)" stroke-width="0.7" fill="rgba(212,188,120,0.02)"/>
+      <rect x="132" y="224" width="14" height="20" rx="7 7 0 0" stroke="rgba(10,61,46,0.08)" stroke-width="0.7" fill="rgba(212,188,120,0.02)"/>
+      <rect x="122" y="268" width="16" height="22" rx="8 8 0 0" stroke="rgba(10,61,46,0.06)" stroke-width="0.7" fill="rgba(212,188,120,0.015)"/>
+      <rect x="114" y="312" width="14" height="20" rx="7 7 0 0" stroke="rgba(10,61,46,0.06)" stroke-width="0.7" fill="rgba(212,188,120,0.015)"/>
+      <rect x="132" y="312" width="14" height="20" rx="7 7 0 0" stroke="rgba(10,61,46,0.06)" stroke-width="0.7" fill="rgba(212,188,120,0.015)"/>
+
+      <!-- Horizontal stone bands -->
+      <line x1="100" y1="170" x2="160" y2="170" stroke="rgba(10,61,46,0.05)" stroke-width="0.5"/>
+      <line x1="100" y1="215" x2="160" y2="215" stroke="rgba(10,61,46,0.05)" stroke-width="0.5"/>
+      <line x1="100" y1="258" x2="160" y2="258" stroke="rgba(10,61,46,0.05)" stroke-width="0.5"/>
+      <line x1="100" y1="302" x2="160" y2="302" stroke="rgba(10,61,46,0.05)" stroke-width="0.5"/>
+      <line x1="100" y1="345" x2="160" y2="345" stroke="rgba(10,61,46,0.05)" stroke-width="0.5"/>
+
+      <!-- Gold accent centre line -->
+      <line x1="130" y1="115" x2="130" y2="378" stroke="#D4BC78" stroke-width="0.5" opacity="0.12" stroke-dasharray="3 6"/>
+
+      <!-- Base / foundation -->
+      <rect x="85" y="378" width="90" height="52" rx="2" stroke="rgba(10,61,46,0.1)" stroke-width="1" fill="rgba(10,61,46,0.02)"/>
+      <!-- Base door (arched) -->
+      <path d="M118 430 L118 400 Q118 390 130 390 Q142 390 142 400 L142 430" stroke="rgba(10,61,46,0.1)" stroke-width="0.8" fill="rgba(212,188,120,0.03)"/>
+      <!-- Doorknob -->
+      <circle cx="135" cy="415" r="1.2" fill="rgba(212,188,120,0.3)"/>
+
+      <!-- Ground -->
+      <line x1="55" y1="430" x2="205" y2="430" stroke="rgba(10,61,46,0.08)" stroke-width="1"/>
+      <line x1="65" y1="436" x2="95" y2="436" stroke="rgba(10,61,46,0.04)" stroke-width="0.5"/>
+      <line x1="120" y1="438" x2="160" y2="438" stroke="rgba(10,61,46,0.04)" stroke-width="0.5"/>
+      <line x1="170" y1="435" x2="195" y2="435" stroke="rgba(10,61,46,0.04)" stroke-width="0.5"/>
+    </svg>
+  </div>
+
+  <div class="container" style="position: relative; z-index: 2; padding-top: 160px; padding-bottom: 80px;">
+    <div class="reveal" style="width: 48px; height: 1.5px; background: var(--green); margin-bottom: 40px;"></div>
+
+    <div class="reveal reveal-d1" style="margin-bottom: 12px;">
+      <span class="label" style="display: inline-flex; align-items: center; gap: 8px; color: var(--green);">
+        <span style="width: 8px; height: 8px; border-radius: 50%; background: var(--green); animation: pulse 2.5s ease-in-out infinite;"></span>
+        Your AI Watchman
+      </span>
+    </div>
+
+    <h1 class="font-display reveal reveal-d2 hero-heading" style="font-size: clamp(48px, 7vw, 88px); font-weight: 400; line-height: 0.95; color: var(--charcoal); margin-bottom: 32px; letter-spacing: -0.02em; max-width: 750px;">
+      The world's first<br>
+      <em class="font-accent electric-text" style="font-style: italic; display: inline-block;">AI confluence</em><br>
+      scoring engine.
+    </h1>
+
+    <p class="font-accent reveal reveal-d3" style="font-size: 22px; color: var(--slate); font-style: italic; letter-spacing: 0.02em; margin-bottom: 20px; max-width: 560px;">
+      Five dimensions. One score. Only setups above 70 get through.
+    </p>
+    <p class="font-body reveal reveal-d3" style="font-size: 14px; color: var(--slate); opacity: 0.7; margin-bottom: 48px; max-width: 520px; font-weight: 300; line-height: 1.7;">
+      No other tool scores trade setups across HTF bias, key levels, momentum, timing, and confirmation before you risk a penny. Shiloh Watch does. That is why it exists.
+    </p>
+
+    <div class="reveal reveal-d4" style="display: flex; flex-wrap: wrap; gap: 16px; align-items: center;">
+      <a href="#waitlist" class="btn-gold">Join the Waitlist</a>
+      <a href="#features" style="display: inline-block; padding: 14px 36px; background: transparent; color: var(--charcoal); font-size: 13px; font-weight: 400; letter-spacing: 0.08em; text-decoration: none; border: 1px solid var(--stone); cursor: pointer; transition: all 0.3s;" onmouseover="this.style.borderColor='var(--green)';this.style.color='var(--green)'" onmouseout="this.style.borderColor='var(--stone)';this.style.color='var(--charcoal)'">See How It Works</a>
+    </div>
+
+    <!-- Stat counters -->
+    <div class="reveal reveal-d5 stat-grid" style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin-top: 80px;">
+      <div style="background: white; border: 1px solid var(--stone); border-radius: 16px; padding: 32px; text-align: center; transition: all 0.4s;" onmouseover="this.style.borderColor='var(--gold)';this.style.transform='translateY(-4px)';this.style.boxShadow='0 20px 60px rgba(0,0,0,0.06)'" onmouseout="this.style.borderColor='var(--stone)';this.style.transform='translateY(0)';this.style.boxShadow='none'">
+        <div class="font-display" style="font-size: clamp(32px, 4vw, 48px); color: var(--green);"><span class="counter" data-target="78.6">0</span>%</div>
+        <div style="font-size: 12px; color: var(--slate); margin-top: 4px; letter-spacing: 0.05em;">GOOGL Win Rate</div>
+      </div>
+      <div style="background: white; border: 1px solid var(--stone); border-radius: 16px; padding: 32px; text-align: center; transition: all 0.4s;" onmouseover="this.style.borderColor='var(--gold)';this.style.transform='translateY(-4px)';this.style.boxShadow='0 20px 60px rgba(0,0,0,0.06)'" onmouseout="this.style.borderColor='var(--stone)';this.style.transform='translateY(0)';this.style.boxShadow='none'">
+        <div class="font-display" style="font-size: clamp(32px, 4vw, 48px); color: var(--green);"><span class="counter" data-target="62.5">0</span>%</div>
+        <div style="font-size: 12px; color: var(--slate); margin-top: 4px; letter-spacing: 0.05em;">META Win Rate</div>
+      </div>
+      <div style="background: white; border: 1px solid var(--stone); border-radius: 16px; padding: 32px; text-align: center; transition: all 0.4s;" onmouseover="this.style.borderColor='var(--gold)';this.style.transform='translateY(-4px)';this.style.boxShadow='0 20px 60px rgba(0,0,0,0.06)'" onmouseout="this.style.borderColor='var(--stone)';this.style.transform='translateY(0)';this.style.boxShadow='none'">
+        <div class="font-display" style="font-size: clamp(32px, 4vw, 48px); color: var(--green);"><span class="counter" data-target="59.1">0</span>%</div>
+        <div style="font-size: 12px; color: var(--slate); margin-top: 4px; letter-spacing: 0.05em;">BTC Win Rate</div>
+      </div>
+      <div style="background: white; border: 1px solid var(--stone); border-radius: 16px; padding: 32px; text-align: center; transition: all 0.4s;" onmouseover="this.style.borderColor='var(--gold)';this.style.transform='translateY(-4px)';this.style.boxShadow='0 20px 60px rgba(0,0,0,0.06)'" onmouseout="this.style.borderColor='var(--stone)';this.style.transform='translateY(0)';this.style.boxShadow='none'">
+        <div class="font-display" style="font-size: clamp(32px, 4vw, 48px); color: var(--gold);"><span class="counter" data-target="20">0</span></div>
+        <div style="font-size: 12px; color: var(--slate); margin-top: 4px; letter-spacing: 0.05em;">Markets Covered</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Scroll indicator -->
+  <div style="position: absolute; bottom: 32px; left: 50%; transform: translateX(-50%); z-index: 2;">
+    <div style="width: 1px; height: 40px; background: linear-gradient(to bottom, var(--green), transparent); animation: scrollPulse 2s ease-in-out infinite;"></div>
+  </div>
+</section>
+
+<!-- ════════════════════════════ FEATURES ════════════════════════════ -->
+<section id="features" style="background: white; padding: 120px 0;">
+  <div class="container">
+    <p class="label reveal" style="margin-bottom: 16px;">The Edge</p>
+    <h2 class="font-display reveal" style="font-size: clamp(28px, 4vw, 42px); font-weight: 400; color: var(--charcoal); margin-bottom: 12px;">
+      Five dimensions. One <em class="font-accent" style="color: var(--green); font-style: italic;">score.</em>
+    </h2>
+    <p class="font-body reveal" style="font-size: 14px; font-weight: 300; color: var(--slate); margin-bottom: 56px; max-width: 540px;">
+      Every potential trade is scored 0-100 across five independent dimensions. Only setups scoring 70+ get through. This is not another indicator. It is a quality gate.
+    </p>
+
+    <div class="grid-3" style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px;">
+      <div class="feature-card reveal">
+        <div style="width: 44px; height: 44px; background: var(--green); border-radius: 8px; display: flex; align-items: center; justify-content: center; margin-bottom: 20px;">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--gold)" stroke-width="1.5"><polyline points="23,6 13.5,15.5 8.5,10.5 1,18"/></svg>
+        </div>
+        <h3 class="font-display" style="font-size: 22px; margin-bottom: 8px;">HTF Bias</h3>
+        <p class="font-body" style="font-size: 13px; font-weight: 300; color: var(--slate); line-height: 1.8;">Daily EMA alignment filters counter-trend trades. Never short gold in a bull run again.</p>
+      </div>
+      <div class="feature-card reveal reveal-d1">
+        <div style="width: 44px; height: 44px; background: rgba(212,188,120,0.12); border-radius: 8px; display: flex; align-items: center; justify-content: center; margin-bottom: 20px;">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--gold)" stroke-width="1.5"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><line x1="10" y1="6.5" x2="14" y2="6.5"/><line x1="10" y1="17.5" x2="14" y2="17.5"/></svg>
+        </div>
+        <h3 class="font-display" style="font-size: 22px; margin-bottom: 8px;">Key Levels</h3>
+        <p class="font-body" style="font-size: 13px; font-weight: 300; color: var(--slate); line-height: 1.8;">FVGs, Order Blocks, Breaker Blocks, OTE zones, and liquidity clusters. ICT methodology, automated.</p>
+      </div>
+      <div class="feature-card reveal reveal-d2">
+        <div style="width: 44px; height: 44px; background: var(--green); border-radius: 8px; display: flex; align-items: center; justify-content: center; margin-bottom: 20px;">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--gold)" stroke-width="1.5"><polyline points="22,12 18,12 15,21 9,3 6,12 2,12"/></svg>
+        </div>
+        <h3 class="font-display" style="font-size: 22px; margin-bottom: 8px;">Momentum</h3>
+        <p class="font-body" style="font-size: 13px; font-weight: 300; color: var(--slate); line-height: 1.8;">RSI, MACD, ADX, Stochastic RSI, and Bollinger Bands confirm every entry with multi-indicator alignment.</p>
+      </div>
+      <div class="feature-card reveal">
+        <div style="width: 44px; height: 44px; background: rgba(212,188,120,0.12); border-radius: 8px; display: flex; align-items: center; justify-content: center; margin-bottom: 20px;">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--gold)" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><polyline points="12,6 12,12 16,14"/></svg>
+        </div>
+        <h3 class="font-display" style="font-size: 22px; margin-bottom: 8px;">Kill Zones</h3>
+        <p class="font-body" style="font-size: 13px; font-weight: 300; color: var(--slate); line-height: 1.8;">ICT Silver Bullet windows and session-specific timing. Gold, crypto, and stocks each get their own optimal windows.</p>
+      </div>
+      <div class="feature-card reveal reveal-d1">
+        <div style="width: 44px; height: 44px; background: var(--green); border-radius: 8px; display: flex; align-items: center; justify-content: center; margin-bottom: 20px;">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--gold)" stroke-width="1.5"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+        </div>
+        <h3 class="font-display" style="font-size: 22px; margin-bottom: 8px;">Confirmation</h3>
+        <p class="font-body" style="font-size: 13px; font-weight: 300; color: var(--slate); line-height: 1.8;">BOS/CHoCH structure shifts, displacement candles, reversal patterns, and Fibonacci OTE. Every trade earns its entry.</p>
+      </div>
+      <div class="feature-card reveal reveal-d2">
+        <div style="width: 44px; height: 44px; background: rgba(212,188,120,0.12); border-radius: 8px; display: flex; align-items: center; justify-content: center; margin-bottom: 20px;">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--gold)" stroke-width="1.5"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
+        </div>
+        <h3 class="font-display" style="font-size: 22px; margin-bottom: 8px;">Macro Correlation</h3>
+        <p class="font-body" style="font-size: 13px; font-weight: 300; color: var(--slate); line-height: 1.8;">DXY, treasury yields, oil, and VIX feed into every score. Institutional-grade macro analysis in every setup.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ════════════════════════════ RESULTS ════════════════════════════ -->
+<section id="results" style="background: linear-gradient(160deg, var(--deep) 0%, var(--navy) 40%, #0D4A32 100%); padding: 120px 0; position: relative; overflow: hidden;">
+  <div style="position: absolute; top: 5%; right: -5%; width: 700px; height: 700px; background: radial-gradient(circle, rgba(212,188,120,0.06) 0%, transparent 70%); border-radius: 50%; pointer-events: none;"></div>
+
+  <div class="container" style="position: relative; z-index: 2;">
+    <div style="text-align: center; margin-bottom: 64px;">
+      <p class="label reveal" style="margin-bottom: 16px;">Walk-Forward Validated</p>
+      <h2 class="font-display reveal" style="font-size: clamp(32px, 5vw, 56px); font-weight: 400; color: var(--cream);">Built on data. <em class="font-accent" style="font-style: italic; color: var(--gold);">Validated on unseen markets.</em></h2>
+      <p class="font-body reveal reveal-d1" style="font-size: 15px; font-weight: 300; color: rgba(250,248,244,0.5); margin-top: 20px; max-width: 600px; margin-left: auto; margin-right: auto; line-height: 1.8;">
+        Every result below is validated against unseen data using walk-forward testing. No curve-fitting. No cherry-picking. Past performance does not guarantee future results.
+      </p>
+    </div>
+
+    <div class="grid-3" style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-bottom: 48px;">
+      <div class="stat-card reveal">
+        <div class="font-display" style="font-size: 56px; color: var(--gold);">78.6%</div>
+        <div style="font-size: 15px; color: rgba(250,248,244,0.7); margin-top: 8px;">GOOGL Win Rate</div>
+        <div style="font-size: 12px; color: rgba(250,248,244,0.3); margin-top: 4px;">Sharpe Ratio: 12.15</div>
+      </div>
+      <div class="stat-card reveal reveal-d1">
+        <div class="font-display" style="font-size: 56px; color: var(--gold);">62.5%</div>
+        <div style="font-size: 15px; color: rgba(250,248,244,0.7); margin-top: 8px;">META Win Rate</div>
+        <div style="font-size: 12px; color: rgba(250,248,244,0.3); margin-top: 4px;">Sharpe Ratio: 8.14</div>
+      </div>
+      <div class="stat-card reveal reveal-d2">
+        <div class="font-display" style="font-size: 56px; color: var(--gold);">59.1%</div>
+        <div style="font-size: 15px; color: rgba(250,248,244,0.7); margin-top: 8px;">BTC Win Rate</div>
+        <div style="font-size: 12px; color: rgba(250,248,244,0.3); margin-top: 4px;">+$17,685 backtested (6 months)</div>
+      </div>
+    </div>
+
+    <!-- Market coverage pills -->
+    <div class="reveal reveal-d3" style="display: flex; flex-wrap: wrap; justify-content: center; gap: 10px;">
+      <span style="padding: 8px 18px; background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.08); border-radius: 100px; font-size: 13px; color: rgba(250,248,244,0.5); transition: all 0.3s;" onmouseover="this.style.borderColor='rgba(212,188,120,0.4)';this.style.color='var(--gold)'" onmouseout="this.style.borderColor='rgba(255,255,255,0.08)';this.style.color='rgba(250,248,244,0.5)'">XAUUSD</span>
+      <span style="padding: 8px 18px; background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.08); border-radius: 100px; font-size: 13px; color: rgba(250,248,244,0.5);">BTCUSD</span>
+      <span style="padding: 8px 18px; background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.08); border-radius: 100px; font-size: 13px; color: rgba(250,248,244,0.5);">SOLUSD</span>
+      <span style="padding: 8px 18px; background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.08); border-radius: 100px; font-size: 13px; color: rgba(250,248,244,0.5);">TSLA</span>
+      <span style="padding: 8px 18px; background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.08); border-radius: 100px; font-size: 13px; color: rgba(250,248,244,0.5);">NVDA</span>
+      <span style="padding: 8px 18px; background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.08); border-radius: 100px; font-size: 13px; color: rgba(250,248,244,0.5);">AAPL</span>
+      <span style="padding: 8px 18px; background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.08); border-radius: 100px; font-size: 13px; color: rgba(250,248,244,0.5);">META</span>
+      <span style="padding: 8px 18px; background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.08); border-radius: 100px; font-size: 13px; color: rgba(250,248,244,0.5);">GOOGL</span>
+      <span style="padding: 8px 18px; background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.08); border-radius: 100px; font-size: 13px; color: rgba(250,248,244,0.5);">AMZN</span>
+      <span style="padding: 8px 18px; background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.08); border-radius: 100px; font-size: 13px; color: rgba(250,248,244,0.5);">QQQ</span>
+      <span style="padding: 8px 18px; background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.08); border-radius: 100px; font-size: 13px; color: rgba(250,248,244,0.5);">NFLX</span>
+      <span style="padding: 8px 18px; background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.08); border-radius: 100px; font-size: 13px; color: rgba(250,248,244,0.5);">AMD</span>
+      <span style="padding: 8px 18px; background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.08); border-radius: 100px; font-size: 13px; color: rgba(250,248,244,0.5);">MSFT</span>
+      <span style="padding: 8px 18px; background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.08); border-radius: 100px; font-size: 13px; color: rgba(250,248,244,0.5);">ETHUSD</span>
+      <span style="padding: 8px 18px; background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.08); border-radius: 100px; font-size: 13px; color: rgba(250,248,244,0.5);">EURUSD</span>
+      <span style="padding: 8px 18px; background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.08); border-radius: 100px; font-size: 13px; color: rgba(250,248,244,0.5);">GBPUSD</span>
+      <span style="padding: 8px 18px; background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.08); border-radius: 100px; font-size: 13px; color: rgba(250,248,244,0.5);">SPY</span>
+      <span style="padding: 8px 18px; background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.08); border-radius: 100px; font-size: 13px; color: rgba(250,248,244,0.5);">JPM</span>
+      <span style="padding: 8px 18px; background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.08); border-radius: 100px; font-size: 13px; color: rgba(250,248,244,0.5);">COIN</span>
+    </div>
+  </div>
+</section>
+
+<!-- ════════════════════════════ WHAT YOU GET ════════════════════════════ -->
+<section style="background: var(--cream); padding: 120px 0;">
+  <div class="container">
+    <p class="label reveal" style="margin-bottom: 16px;">What You Get</p>
+    <h2 class="font-display reveal" style="font-size: clamp(28px, 4vw, 42px); font-weight: 400; margin-bottom: 12px;">
+      A complete <em class="font-accent" style="color: var(--green); font-style: italic;">trading intelligence system.</em>
+    </h2>
+    <p class="font-body reveal" style="font-size: 14px; font-weight: 300; color: var(--slate); margin-bottom: 56px; max-width: 540px;">
+      Not a single indicator bolted onto a chart. An end-to-end analysis engine that scores, backtests, optimises, and journals every trade.
+    </p>
+
+    <div class="grid-2" style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px;">
+      <div class="feature-card reveal">
+        <h3 class="font-display" style="font-size: 20px; margin-bottom: 8px;">Interactive Charts</h3>
+        <p class="font-body" style="font-size: 13px; font-weight: 300; color: var(--slate); line-height: 1.8;">Candlestick charts with annotated FVG zones, order blocks, breaker blocks, Fibonacci levels, and trade entry/SL/TP overlays.</p>
+      </div>
+      <div class="feature-card reveal reveal-d1">
+        <h3 class="font-display" style="font-size: 20px; margin-bottom: 8px;">Walk-Forward Backtesting</h3>
+        <p class="font-body" style="font-size: 13px; font-weight: 300; color: var(--slate); line-height: 1.8;">Train on 3 months, test on 1 month, roll forward. The industry standard for strategy validation. No overfitting.</p>
+      </div>
+      <div class="feature-card reveal">
+        <h3 class="font-display" style="font-size: 20px; margin-bottom: 8px;">Self-Learning Optimiser</h3>
+        <p class="font-body" style="font-size: 13px; font-weight: 300; color: var(--slate); line-height: 1.8;">Grid search across every parameter combination. Finds the best settings per market. Gets smarter with every backtest.</p>
+      </div>
+      <div class="feature-card reveal reveal-d1">
+        <h3 class="font-display" style="font-size: 20px; margin-bottom: 8px;">Prop Firm Simulator</h3>
+        <p class="font-body" style="font-size: 13px; font-weight: 300; color: var(--slate); line-height: 1.8;">FTMO-style challenge simulation with equity curve, violation log, and pass probability. Know your odds before you pay.</p>
+      </div>
+      <div class="feature-card reveal">
+        <h3 class="font-display" style="font-size: 20px; margin-bottom: 8px;">Partial Profit Taking</h3>
+        <p class="font-body" style="font-size: 13px; font-weight: 300; color: var(--slate); line-height: 1.8;">Close 50% at TP1, move stop to breakeven, trail the rest to TP2. Automatically improves your risk profile.</p>
+      </div>
+      <div class="feature-card reveal reveal-d1">
+        <h3 class="font-display" style="font-size: 20px; margin-bottom: 8px;">Trader DNA Score</h3>
+        <p class="font-body" style="font-size: 13px; font-weight: 300; color: var(--slate); line-height: 1.8;">Radar chart rating your discipline, risk management, consistency, strategy, and adaptability. Track your growth as a trader.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ════════════════════════════ PRICING ════════════════════════════ -->
+<section id="pricing" style="background: white; padding: 120px 0;">
+  <div class="container">
+    <div style="text-align: center; margin-bottom: 64px;">
+      <p class="label reveal" style="margin-bottom: 16px;">Pricing</p>
+      <h2 class="font-display reveal" style="font-size: clamp(28px, 4.5vw, 48px); font-weight: 400;">
+        Start free. <em class="font-accent" style="color: var(--green); font-style: italic;">Scale when ready.</em>
+      </h2>
+    </div>
+
+    <div class="grid-4" style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; max-width: 1100px; margin: 0 auto;">
+      <!-- Free -->
+      <div class="price-card reveal">
+        <div style="font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.15em; color: var(--slate); margin-bottom: 20px;">Free</div>
+        <div class="font-display" style="font-size: 44px; margin-bottom: 4px;">$0</div>
+        <div style="font-size: 13px; color: var(--slate); margin-bottom: 32px;">Forever free</div>
+        <ul style="list-style: none; padding: 0; margin-bottom: 32px; flex-grow: 1;">
+          <li style="display: flex; align-items: flex-start; gap: 8px; font-size: 13px; color: var(--slate); margin-bottom: 10px; line-height: 1.6;"><span style="color: var(--green); margin-top: 2px;">&#10003;</span> 5 markets (Gold, BTC, ETH, SOL, SPY)</li>
+          <li style="display: flex; align-items: flex-start; gap: 8px; font-size: 13px; color: var(--slate); margin-bottom: 10px; line-height: 1.6;"><span style="color: var(--green); margin-top: 2px;">&#10003;</span> Confluence scoring</li>
+          <li style="display: flex; align-items: flex-start; gap: 8px; font-size: 13px; color: var(--slate); margin-bottom: 10px; line-height: 1.6;"><span style="color: var(--green); margin-top: 2px;">&#10003;</span> Interactive charts</li>
+          <li style="display: flex; align-items: flex-start; gap: 8px; font-size: 13px; color: var(--slate); margin-bottom: 10px; line-height: 1.6;"><span style="color: var(--green); margin-top: 2px;">&#10003;</span> 5 backtests/month</li>
+          <li style="display: flex; align-items: flex-start; gap: 8px; font-size: 13px; color: var(--slate); margin-bottom: 10px; line-height: 1.6; opacity: 0.35;"><span style="margin-top: 2px;">&#10007;</span> All 20 markets</li>
+          <li style="display: flex; align-items: flex-start; gap: 8px; font-size: 13px; color: var(--slate); line-height: 1.6; opacity: 0.35;"><span style="margin-top: 2px;">&#10007;</span> Self-learning optimiser</li>
+        </ul>
+        <a href="#waitlist" style="display: block; text-align: center; padding: 14px 24px; border: 1px solid var(--stone); font-size: 13px; color: var(--charcoal); text-decoration: none; font-weight: 500; letter-spacing: 0.05em; transition: all 0.3s;" onmouseover="this.style.borderColor='var(--green)';this.style.color='var(--green)'" onmouseout="this.style.borderColor='var(--stone)';this.style.color='var(--charcoal)'">Join Waitlist</a>
+      </div>
+
+      <!-- Pro -->
+      <div class="price-card price-popular reveal reveal-d1">
+        <div style="position: absolute; top: -12px; left: 50%; transform: translateX(-50%); padding: 6px 20px; background: var(--green); color: white; font-size: 10px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.15em;">Most Popular</div>
+        <div style="font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.15em; color: var(--green); margin-bottom: 20px;">Pro</div>
+        <div class="font-display" style="font-size: 44px; margin-bottom: 4px;">$49<span style="font-size: 20px; opacity: 0.5;">/mo</span></div>
+        <div style="font-size: 13px; color: var(--slate); margin-bottom: 32px;">~&#163;39/mo</div>
+        <ul style="list-style: none; padding: 0; margin-bottom: 32px; flex-grow: 1;">
+          <li style="display: flex; align-items: flex-start; gap: 8px; font-size: 13px; color: var(--slate); margin-bottom: 10px; line-height: 1.6;"><span style="color: var(--green); margin-top: 2px;">&#10003;</span> All 20 markets</li>
+          <li style="display: flex; align-items: flex-start; gap: 8px; font-size: 13px; color: var(--slate); margin-bottom: 10px; line-height: 1.6;"><span style="color: var(--green); margin-top: 2px;">&#10003;</span> Confluence scoring</li>
+          <li style="display: flex; align-items: flex-start; gap: 8px; font-size: 13px; color: var(--slate); margin-bottom: 10px; line-height: 1.6;"><span style="color: var(--green); margin-top: 2px;">&#10003;</span> Unlimited backtests</li>
+          <li style="display: flex; align-items: flex-start; gap: 8px; font-size: 13px; color: var(--slate); margin-bottom: 10px; line-height: 1.6;"><span style="color: var(--green); margin-top: 2px;">&#10003;</span> AI-powered analysis</li>
+          <li style="display: flex; align-items: flex-start; gap: 8px; font-size: 13px; color: var(--slate); margin-bottom: 10px; line-height: 1.6;"><span style="color: var(--green); margin-top: 2px;">&#10003;</span> Prop firm simulator</li>
+          <li style="display: flex; align-items: flex-start; gap: 8px; font-size: 13px; color: var(--slate); line-height: 1.6;"><span style="color: var(--green); margin-top: 2px;">&#10003;</span> Macro correlation engine</li>
+        </ul>
+        <a href="#waitlist" class="btn-gold" style="display: block; text-align: center; padding: 14px 24px; font-size: 13px;">Join Waitlist</a>
+      </div>
+
+      <!-- Elite -->
+      <div class="price-card reveal reveal-d2">
+        <div style="font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.15em; color: var(--slate); margin-bottom: 20px;">Elite</div>
+        <div class="font-display" style="font-size: 44px; margin-bottom: 4px;">$99<span style="font-size: 20px; opacity: 0.5;">/mo</span></div>
+        <div style="font-size: 13px; color: var(--slate); margin-bottom: 32px;">~&#163;79/mo</div>
+        <ul style="list-style: none; padding: 0; margin-bottom: 32px; flex-grow: 1;">
+          <li style="display: flex; align-items: flex-start; gap: 8px; font-size: 13px; color: var(--slate); margin-bottom: 10px; line-height: 1.6;"><span style="color: var(--green); margin-top: 2px;">&#10003;</span> Everything in Pro</li>
+          <li style="display: flex; align-items: flex-start; gap: 8px; font-size: 13px; color: var(--slate); margin-bottom: 10px; line-height: 1.6;"><span style="color: var(--green); margin-top: 2px;">&#10003;</span> Self-learning optimiser</li>
+          <li style="display: flex; align-items: flex-start; gap: 8px; font-size: 13px; color: var(--slate); margin-bottom: 10px; line-height: 1.6;"><span style="color: var(--green); margin-top: 2px;">&#10003;</span> Custom pair requests</li>
+          <li style="display: flex; align-items: flex-start; gap: 8px; font-size: 13px; color: var(--slate); margin-bottom: 10px; line-height: 1.6;"><span style="color: var(--green); margin-top: 2px;">&#10003;</span> Priority analysis</li>
+          <li style="display: flex; align-items: flex-start; gap: 8px; font-size: 13px; color: var(--slate); margin-bottom: 10px; line-height: 1.6;"><span style="color: var(--green); margin-top: 2px;">&#10003;</span> Strategy performance dashboard</li>
+          <li style="display: flex; align-items: flex-start; gap: 8px; font-size: 13px; color: var(--slate); line-height: 1.6;"><span style="color: var(--green); margin-top: 2px;">&#10003;</span> Weekly market breakdown email</li>
+        </ul>
+        <a href="#waitlist" style="display: block; text-align: center; padding: 14px 24px; border: 1px solid var(--stone); font-size: 13px; color: var(--charcoal); text-decoration: none; font-weight: 500; letter-spacing: 0.05em; transition: all 0.3s;" onmouseover="this.style.borderColor='var(--green)';this.style.color='var(--green)'" onmouseout="this.style.borderColor='var(--stone)';this.style.color='var(--charcoal)'">Join Waitlist</a>
+      </div>
+
+      <!-- Lifetime Member -->
+      <div class="price-card price-founding reveal reveal-d3">
+        <div style="position: absolute; top: -12px; left: 50%; transform: translateX(-50%); padding: 6px 20px; background: var(--gold); color: var(--deep); font-size: 10px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.15em; animation: foundingPulse 2s ease-in-out infinite;">Limited</div>
+        <div style="font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.15em; color: var(--gold); margin-bottom: 20px;">Lifetime Member</div>
+        <div class="font-display" style="font-size: 44px; margin-bottom: 4px;">$299</div>
+        <div style="font-size: 13px; color: var(--slate); margin-bottom: 4px;">~&#163;239 one-time</div>
+        <div style="font-size: 12px; color: var(--gold); margin-bottom: 32px; font-weight: 500;">Lifetime access</div>
+        <ul style="list-style: none; padding: 0; margin-bottom: 32px; flex-grow: 1;">
+          <li style="display: flex; align-items: flex-start; gap: 8px; font-size: 13px; color: var(--slate); margin-bottom: 10px; line-height: 1.6;"><span style="color: var(--gold); margin-top: 2px;">&#10003;</span> Everything in Elite</li>
+          <li style="display: flex; align-items: flex-start; gap: 8px; font-size: 13px; color: var(--slate); margin-bottom: 10px; line-height: 1.6;"><span style="color: var(--gold); margin-top: 2px;">&#10003;</span> Lifetime access, no renewal</li>
+          <li style="display: flex; align-items: flex-start; gap: 8px; font-size: 13px; color: var(--slate); margin-bottom: 10px; line-height: 1.6;"><span style="color: var(--gold); margin-top: 2px;">&#10003;</span> All future features included</li>
+          <li style="display: flex; align-items: flex-start; gap: 8px; font-size: 13px; color: var(--slate); margin-bottom: 10px; line-height: 1.6;"><span style="color: var(--gold); margin-top: 2px;">&#10003;</span> Lifetime member badge</li>
+          <li style="display: flex; align-items: flex-start; gap: 8px; font-size: 13px; color: var(--slate); margin-bottom: 10px; line-height: 1.6;"><span style="color: var(--gold); margin-top: 2px;">&#10003;</span> Direct input on roadmap</li>
+          <li style="display: flex; align-items: flex-start; gap: 8px; font-size: 13px; color: var(--gold); line-height: 1.6; font-weight: 500;"><span style="margin-top: 2px;">!</span> Only 100 spots available</li>
+        </ul>
+        <a href="#waitlist" style="display: block; text-align: center; padding: 14px 24px; background: var(--gold); font-size: 13px; color: var(--deep); text-decoration: none; font-weight: 600; letter-spacing: 0.05em; transition: all 0.3s;" onmouseover="this.style.background='#c0a860'" onmouseout="this.style.background='var(--gold)'">Claim Your Spot</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ════════════════════════════ WAITLIST CTA ════════════════════════════ -->
+<section id="waitlist" style="background: linear-gradient(160deg, var(--deep) 0%, var(--navy) 100%); padding: 120px 0; position: relative; overflow: hidden;">
+  <div style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 800px; height: 800px; background: radial-gradient(circle, rgba(212,188,120,0.04) 0%, transparent 70%); border-radius: 50%; pointer-events: none;"></div>
+
+  <div class="container" style="position: relative; z-index: 2; text-align: center;">
+    <div class="gold-rule reveal" style="margin: 0 auto 40px auto;"></div>
+    <h2 class="font-display reveal" style="font-size: clamp(32px, 5vw, 56px); font-weight: 400; color: var(--cream); margin-bottom: 20px;">Every trade, <em class="font-accent" style="font-style: italic; color: var(--gold);">scored.</em><br>Every setup, <em class="font-accent" style="font-style: italic; color: var(--gold);">earned.</em></h2>
+    <p class="font-body reveal reveal-d1" style="font-size: 15px; font-weight: 300; color: rgba(250,248,244,0.5); max-width: 520px; margin: 0 auto 48px auto; line-height: 1.8;">Shiloh Watch is launching soon. The first 100 lifetime members lock in access to every feature we ever build. Get on the list.</p>
+
+    <form id="waitlistForm" class="reveal reveal-d2" style="max-width: 480px; margin: 0 auto; display: flex; flex-direction: column; gap: 12px;">
+      <div style="display: flex; gap: 12px;">
+        <input type="email" id="waitlistEmail" class="waitlist-input" placeholder="Enter your email" required style="flex: 1;">
+        <button type="submit" class="btn-gold" style="white-space: nowrap; padding: 16px 32px;">Join Waitlist</button>
+      </div>
+    </form>
+    <p id="waitlistMsg" class="font-body" style="font-size: 14px; color: var(--gold); margin-top: 16px; display: none; font-weight: 500;"></p>
+    <p class="font-body" style="font-size: 11px; color: rgba(10,61,46,0.15); margin-top: 16px;">No spam. Unsubscribe any time.</p>
+  </div>
+</section>
+
+<!-- ════════════════════════════ FOOTER ════════════════════════════ -->
+<footer style="background: var(--deep); padding: 80px 0 48px 0;">
+  <div class="container">
+    <div style="display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 48px; margin-bottom: 64px;" class="grid-4">
+      <div>
+        <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 16px;">
+          <div style="width: 32px; height: 32px; background: var(--gold); border-radius: 4px; display: flex; align-items: center; justify-content: center;">
+            <svg width="16" height="16" viewBox="0 0 32 32" fill="none">
+              <rect x="11" y="12" width="10" height="18" rx="1" stroke="#091A12" stroke-width="2" fill="none"/>
+              <rect x="13" y="6" width="6" height="6" rx="0.5" stroke="#091A12" stroke-width="1.5" fill="none"/>
+              <line x1="16" y1="6" x2="16" y2="3" stroke="#091A12" stroke-width="1.5"/>
+              <circle cx="16" cy="2" r="1.5" fill="#091A12"/>
+            </svg>
+          </div>
+          <span class="font-display" style="font-size: 18px; color: var(--cream);">Shiloh Watch</span>
+        </div>
+        <p class="font-accent" style="font-size: 15px; color: rgba(250,248,244,0.3); font-style: italic;">Your AI Watchman.</p>
+      </div>
+      <div>
+        <div style="font-size: 10px; font-weight: 500; text-transform: uppercase; letter-spacing: 0.2em; color: rgba(10,61,46,0.2); margin-bottom: 16px;">Product</div>
+        <ul style="list-style: none; padding: 0;">
+          <li style="margin-bottom: 10px;"><a href="#features" style="font-size: 13px; color: rgba(250,248,244,0.4); text-decoration: none; transition: color 0.3s;" onmouseover="this.style.color='var(--gold)'" onmouseout="this.style.color='rgba(250,248,244,0.4)'">Features</a></li>
+          <li style="margin-bottom: 10px;"><a href="#pricing" style="font-size: 13px; color: rgba(250,248,244,0.4); text-decoration: none; transition: color 0.3s;" onmouseover="this.style.color='var(--gold)'" onmouseout="this.style.color='rgba(250,248,244,0.4)'">Pricing</a></li>
+          <li><a href="#results" style="font-size: 13px; color: rgba(250,248,244,0.4); text-decoration: none; transition: color 0.3s;" onmouseover="this.style.color='var(--gold)'" onmouseout="this.style.color='rgba(250,248,244,0.4)'">Results</a></li>
+        </ul>
+      </div>
+      <div>
+        <div style="font-size: 10px; font-weight: 500; text-transform: uppercase; letter-spacing: 0.2em; color: rgba(10,61,46,0.2); margin-bottom: 16px;">Company</div>
+        <ul style="list-style: none; padding: 0;">
+          <li style="margin-bottom: 10px;"><a href="#" style="font-size: 13px; color: rgba(250,248,244,0.4); text-decoration: none;">Contact</a></li>
+          <li><a href="#" style="font-size: 13px; color: rgba(250,248,244,0.4); text-decoration: none;">Affiliate Programme</a></li>
+        </ul>
+      </div>
+      <div>
+        <div style="font-size: 10px; font-weight: 500; text-transform: uppercase; letter-spacing: 0.2em; color: rgba(10,61,46,0.2); margin-bottom: 16px;">Legal</div>
+        <ul style="list-style: none; padding: 0;">
+          <li style="margin-bottom: 10px;"><a href="#" style="font-size: 13px; color: rgba(250,248,244,0.4); text-decoration: none;">Terms of Service</a></li>
+          <li style="margin-bottom: 10px;"><a href="#" style="font-size: 13px; color: rgba(250,248,244,0.4); text-decoration: none;">Privacy Policy</a></li>
+          <li><a href="#" style="font-size: 13px; color: rgba(250,248,244,0.4); text-decoration: none;">Risk Disclaimer</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <div style="height: 1px; background: rgba(10,61,46,0.05); margin-bottom: 32px;"></div>
+
+    <!-- FCA-safe disclaimer -->
+    <p style="font-size: 11px; color: rgba(10,61,46,0.12); line-height: 1.8; margin-bottom: 32px; max-width: 800px;">
+      Shiloh Watch is an analytical tool that detects patterns and presents market data. It does not provide financial advice, investment recommendations, or trading signals. Past performance of analysis patterns does not indicate future results. Trading involves substantial risk of loss. You should consult with a qualified financial advisor before making investment decisions. Shiloh Watch is not regulated by the Financial Conduct Authority (FCA). All backtesting results shown are historical and validated against out-of-sample data using walk-forward methodology.
+    </p>
+
+    <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 16px;">
+      <span style="font-size: 12px; color: rgba(10,61,46,0.15);">&copy; 2026 Shiloh Watch. All rights reserved.</span>
+      <span class="font-accent" style="font-size: 14px; color: rgba(10,61,46,0.15); font-style: italic;">Your AI Watchman.</span>
+    </div>
+  </div>
+</footer>
+
+<!-- ════════════════════════════ SCRIPTS ════════════════════════════ -->
+<script>
+  // Reveal on scroll
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) entry.target.classList.add('visible');
+    });
+  }, { threshold: 0.1 });
+  document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+  // Nav scroll effect
+  window.addEventListener('scroll', () => {
+    document.getElementById('nav').classList.toggle('scrolled', window.scrollY > 50);
+  });
+
+  // Mobile menu
+  document.getElementById('mobileToggle').addEventListener('click', () => document.getElementById('mobileMenu').classList.add('open'));
+  document.getElementById('mobileClose').addEventListener('click', () => document.getElementById('mobileMenu').classList.remove('open'));
+  function closeMobile() { document.getElementById('mobileMenu').classList.remove('open'); }
+
+  // Counter animation
+  const counterObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        const el = entry.target;
+        const target = parseFloat(el.dataset.target);
+        const isDecimal = target % 1 !== 0;
+        const duration = 2000;
+        const start = performance.now();
+        function tick(now) {
+          const progress = Math.min((now - start) / duration, 1);
+          const ease = 1 - Math.pow(1 - progress, 3);
+          const current = target * ease;
+          el.textContent = isDecimal ? current.toFixed(1) : Math.round(current);
+          if (progress < 1) requestAnimationFrame(tick);
+        }
+        requestAnimationFrame(tick);
+        counterObserver.unobserve(el);
+      }
+    });
+  }, { threshold: 0.5 });
+  document.querySelectorAll('.counter').forEach(el => counterObserver.observe(el));
+
+  // Waitlist form
+  document.getElementById('waitlistForm').addEventListener('submit', function(e) {
+    e.preventDefault();
+    const email = document.getElementById('waitlistEmail').value;
+    const msg = document.getElementById('waitlistMsg');
+    const btn = this.querySelector('button');
+    btn.disabled = true;
+    btn.textContent = 'Joining...';
+    const waitlist = JSON.parse(localStorage.getItem('sw_waitlist') || '[]');
+    if (!waitlist.includes(email)) {
+      waitlist.push(email);
+      localStorage.setItem('sw_waitlist', JSON.stringify(waitlist));
+    }
+    setTimeout(function() {
+      msg.textContent = "You're on the list. We'll be in touch.";
+      msg.style.display = 'block';
+      btn.textContent = 'Joined';
+      document.getElementById('waitlistEmail').value = '';
+    }, 800);
+  });
+</script>
+</body>
+</html>
