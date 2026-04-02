@@ -1,0 +1,449 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Terms of Service | Shiloh Watch</title>
+<meta name="description" content="Terms of Service for Shiloh Watch, an AI analytical tool for trading pattern detection by ForeShiloh Ltd.">
+<meta name="robots" content="noindex, follow">
+<link rel="icon" type="image/svg+xml" href="/favicon.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;1,400&family=Cormorant+Garamond:ital,wght@0,400;0,500;1,400&family=Manrope:wght@200;300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; -webkit-font-smoothing: antialiased; }
+  ::selection { background: rgba(212, 188, 120, 0.3); color: inherit; }
+
+  :root {
+    --deep: #091A12;
+    --navy: #0C2E1F;
+    --green: #0A3D2E;
+    --green-mid: #1A6B4A;
+    --gold: #D4BC78;
+    --gold-light: #E0CFA0;
+    --cream: #FAF8F4;
+    --cream-warm: #F5F0E8;
+    --stone: #E8E3DA;
+    --charcoal: #1C1C1C;
+    --slate: #6B7280;
+  }
+
+  body {
+    font-family: 'Manrope', system-ui, sans-serif;
+    background: var(--cream);
+    color: var(--charcoal);
+    overflow-x: hidden;
+  }
+
+  body::after {
+    content: ''; position: fixed; inset: 0; z-index: 9999; pointer-events: none; opacity: 0.018;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+  }
+
+  /* Nav */
+  .nav {
+    background: var(--deep);
+    border-bottom: 1px solid rgba(255,255,255,0.06);
+  }
+  .nav-inner {
+    max-width: 1200px; margin: 0 auto; padding: 0 24px;
+    height: 72px; display: flex; align-items: center; justify-content: space-between;
+  }
+  @media (min-width: 768px) { .nav-inner { padding: 0 48px; height: 80px; } }
+
+  .nav-logo {
+    display: flex; align-items: center; gap: 10px; text-decoration: none;
+  }
+  .nav-logo-mark {
+    width: 32px; height: 32px; background: var(--gold); border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'Playfair Display', serif; font-size: 14px; color: var(--deep); font-weight: 600;
+  }
+  .nav-logo-text {
+    font-family: 'Playfair Display', serif; font-size: 18px; color: var(--cream); letter-spacing: 0.02em;
+  }
+
+  .nav-back {
+    font-size: 12px; font-weight: 400; letter-spacing: 0.08em;
+    color: rgba(250, 248, 244, 0.5); text-decoration: none; transition: color 0.3s;
+    display: flex; align-items: center; gap: 6px;
+  }
+  .nav-back:hover { color: var(--gold); }
+  .nav-back svg { width: 14px; height: 14px; }
+
+  /* Page header */
+  .page-header {
+    background: var(--deep);
+    padding: 64px 0 56px;
+  }
+  .page-header .container {
+    max-width: 800px; margin: 0 auto; padding: 0 24px;
+  }
+  @media (min-width: 768px) { .page-header .container { padding: 0 48px; } }
+
+  .page-label {
+    font-size: 10px; font-weight: 500; text-transform: uppercase; letter-spacing: 0.3em;
+    color: var(--gold); margin-bottom: 16px; display: block;
+  }
+  .page-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(32px, 5vw, 48px);
+    font-weight: 500; color: var(--cream);
+    line-height: 1.15; margin-bottom: 16px;
+  }
+  .page-meta {
+    font-size: 13px; color: rgba(250, 248, 244, 0.45); font-weight: 300; letter-spacing: 0.02em;
+  }
+
+  /* Content */
+  .content-wrap {
+    max-width: 800px; margin: 0 auto; padding: 64px 24px 96px;
+  }
+  @media (min-width: 768px) { .content-wrap { padding: 72px 48px 96px; } }
+
+  .toc {
+    background: white; border: 1px solid var(--stone); border-radius: 12px;
+    padding: 28px 32px; margin-bottom: 56px;
+  }
+  .toc-title {
+    font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.25em;
+    color: var(--slate); margin-bottom: 16px;
+  }
+  .toc ol {
+    list-style: none; counter-reset: toc-counter;
+    display: grid; grid-template-columns: 1fr; gap: 8px;
+  }
+  @media (min-width: 600px) { .toc ol { grid-template-columns: 1fr 1fr; } }
+  .toc ol li {
+    counter-increment: toc-counter;
+    font-size: 13px; color: var(--slate);
+  }
+  .toc ol li::before {
+    content: counter(toc-counter, decimal-leading-zero) ". ";
+    color: var(--gold); font-weight: 600; font-size: 11px; margin-right: 4px;
+  }
+  .toc ol li a {
+    color: var(--slate); text-decoration: none; transition: color 0.2s;
+  }
+  .toc ol li a:hover { color: var(--green); }
+
+  .legal-section {
+    margin-bottom: 52px; padding-top: 8px;
+  }
+  .section-number {
+    font-size: 10px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.3em;
+    color: var(--gold); margin-bottom: 10px; display: block;
+  }
+  .section-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 22px; font-weight: 500; color: var(--charcoal);
+    margin-bottom: 20px; line-height: 1.3;
+  }
+  .legal-section p {
+    font-size: 15px; line-height: 1.8; color: #3A3A3A;
+    margin-bottom: 16px; font-weight: 300;
+  }
+  .legal-section p:last-child { margin-bottom: 0; }
+  .legal-section ul, .legal-section ol {
+    margin: 16px 0 16px 0; padding-left: 0; list-style: none;
+  }
+  .legal-section ul li, .legal-section ol li {
+    font-size: 15px; line-height: 1.7; color: #3A3A3A;
+    font-weight: 300; padding: 6px 0 6px 20px; position: relative;
+  }
+  .legal-section ul li::before {
+    content: ''; position: absolute; left: 0; top: 14px;
+    width: 5px; height: 5px; border-radius: 50%; background: var(--gold);
+  }
+  .legal-section ol { counter-reset: list-counter; }
+  .legal-section ol li { counter-increment: list-counter; }
+  .legal-section ol li::before {
+    content: counter(list-counter) ".";
+    position: absolute; left: 0; color: var(--gold); font-weight: 600; font-size: 13px;
+  }
+
+  .notice-box {
+    background: #FFF8E7; border: 1px solid rgba(212, 188, 120, 0.4); border-left: 3px solid var(--gold);
+    border-radius: 8px; padding: 20px 24px; margin: 24px 0;
+  }
+  .notice-box p {
+    font-size: 14px; line-height: 1.7; color: var(--charcoal); font-weight: 400; margin: 0;
+  }
+  .notice-box strong { color: var(--green); }
+
+  .warning-box {
+    background: #FDF0F0; border: 1px solid rgba(180, 60, 60, 0.2); border-left: 3px solid #C0392B;
+    border-radius: 8px; padding: 20px 24px; margin: 24px 0;
+  }
+  .warning-box p {
+    font-size: 14px; line-height: 1.7; color: var(--charcoal); font-weight: 400; margin: 0;
+  }
+
+  .divider {
+    border: none; border-top: 1px solid var(--stone); margin: 0 0 52px;
+  }
+
+  /* Footer */
+  .footer {
+    background: var(--deep); border-top: 1px solid rgba(255,255,255,0.06);
+    padding: 40px 0;
+  }
+  .footer-inner {
+    max-width: 1200px; margin: 0 auto; padding: 0 24px;
+    display: flex; flex-direction: column; align-items: center; gap: 16px; text-align: center;
+  }
+  @media (min-width: 768px) {
+    .footer-inner { flex-direction: row; justify-content: space-between; text-align: left; padding: 0 48px; }
+  }
+  .footer-copy {
+    font-size: 12px; color: rgba(250, 248, 244, 0.35); font-weight: 300;
+  }
+  .footer-links {
+    display: flex; gap: 24px; flex-wrap: wrap; justify-content: center;
+  }
+  .footer-links a {
+    font-size: 12px; color: rgba(250, 248, 244, 0.4); text-decoration: none; transition: color 0.3s;
+  }
+  .footer-links a:hover { color: var(--gold); }
+</style>
+</head>
+<body>
+
+<!-- Nav -->
+<nav class="nav">
+  <div class="nav-inner">
+    <a href="/" class="nav-logo">
+      <div class="nav-logo-mark">SW</div>
+      <span class="nav-logo-text">Shiloh Watch</span>
+    </a>
+    <a href="/" class="nav-back">
+      <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5">
+        <path d="M10 12L6 8l4-4"/>
+      </svg>
+      Back to site
+    </a>
+  </div>
+</nav>
+
+<!-- Page Header -->
+<header class="page-header">
+  <div class="container">
+    <span class="page-label">Legal</span>
+    <h1 class="page-title">Terms of Service</h1>
+    <p class="page-meta">Last updated: 2 April 2026 &nbsp;|&nbsp; ForeShiloh Ltd &nbsp;|&nbsp; Effective immediately</p>
+  </div>
+</header>
+
+<!-- Content -->
+<main>
+  <div class="content-wrap">
+
+    <div class="notice-box">
+      <p><strong>Please read these terms carefully.</strong> By creating an account or using Shiloh Watch, you agree to be bound by these Terms of Service. If you don't agree, please don't use the service.</p>
+    </div>
+
+    <!-- Table of contents -->
+    <div class="toc">
+      <div class="toc-title">Contents</div>
+      <ol>
+        <li><a href="#service">About the Service</a></li>
+        <li><a href="#eligibility">Eligibility and Accounts</a></li>
+        <li><a href="#subscriptions">Subscriptions and Billing</a></li>
+        <li><a href="#lifetime">Lifetime Membership</a></li>
+        <li><a href="#acceptable-use">Acceptable Use</a></li>
+        <li><a href="#ip">Intellectual Property</a></li>
+        <li><a href="#liability">Limitation of Liability</a></li>
+        <li><a href="#termination">Termination</a></li>
+        <li><a href="#changes">Changes to Terms</a></li>
+        <li><a href="#governing-law">Governing Law</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ol>
+    </div>
+
+    <!-- 1. About the Service -->
+    <section class="legal-section" id="service">
+      <span class="section-number">01</span>
+      <h2 class="section-title">About the Service</h2>
+      <p>Shiloh Watch is an AI-powered analytical tool for trading pattern detection, operated by ForeShiloh Ltd, a company registered in England and Wales (Companies House registration, 17 March 2026), based in Sheffield, UK.</p>
+      <p>The service provides analytical information, pattern detection, confluence scoring, and market data summaries for educational and informational purposes only. It is designed to help traders understand market structure and identify potential setups based on technical analysis.</p>
+      <div class="warning-box">
+        <p><strong>Important:</strong> Shiloh Watch is not financial advice. It is not regulated by the Financial Conduct Authority (FCA) or any other financial regulatory body. Nothing on this platform constitutes a recommendation to buy, sell, or hold any financial instrument. You should not make trading or investment decisions based solely on information provided by this service.</p>
+      </div>
+      <p>By using Shiloh Watch, you confirm that you understand the analytical nature of the service and that all trading decisions remain entirely your own responsibility.</p>
+    </section>
+
+    <hr class="divider">
+
+    <!-- 2. Eligibility -->
+    <section class="legal-section" id="eligibility">
+      <span class="section-number">02</span>
+      <h2 class="section-title">Eligibility and Accounts</h2>
+      <p>To use Shiloh Watch, you must:</p>
+      <ul>
+        <li>Be at least 18 years old</li>
+        <li>Have the legal capacity to enter into a binding contract</li>
+        <li>Not be prohibited from using the service under applicable law</li>
+        <li>Provide accurate and complete registration information</li>
+      </ul>
+      <p>You're responsible for maintaining the security of your account credentials. Don't share your password with anyone, and let us know immediately at <a href="mailto:hello@foreshiloh.com" style="color: var(--green);">hello@foreshiloh.com</a> if you suspect unauthorised access.</p>
+      <p>You may hold only one account. Creating multiple accounts to circumvent usage limits or subscription restrictions is prohibited and may result in termination of all associated accounts.</p>
+      <p>We reserve the right to decline registrations, suspend accounts, or refuse service at our discretion, particularly where we believe our terms are being violated or the service is being misused.</p>
+    </section>
+
+    <hr class="divider">
+
+    <!-- 3. Subscriptions -->
+    <section class="legal-section" id="subscriptions">
+      <span class="section-number">03</span>
+      <h2 class="section-title">Subscriptions and Billing</h2>
+      <p>Shiloh Watch offers monthly subscription plans with different tiers of access. Pricing is displayed on the website and is subject to change with reasonable notice.</p>
+      <p><strong>Billing cycle:</strong> Subscriptions are billed monthly in advance. Your billing date is the date you first subscribed, recurring each month.</p>
+      <p><strong>Payment processing:</strong> All payments are processed securely through Stripe. We don't store your payment card details on our systems. By subscribing, you authorise Stripe to charge your payment method on a recurring basis in accordance with your chosen plan.</p>
+      <p><strong>Failed payments:</strong> If a payment fails, we'll notify you and attempt to retry. If payment remains outstanding after reasonable attempts, your account may be downgraded or suspended until payment is resolved.</p>
+      <p><strong>Cancellation:</strong> You can cancel your subscription at any time from your account settings. Cancellation takes effect at the end of your current billing period. You'll retain access to paid features until that date, and we won't charge you again after cancellation.</p>
+      <p><strong>Refunds:</strong> We don't offer refunds for partial months. If you cancel mid-cycle, your access continues until the period ends. In exceptional circumstances (for example, a technical error on our side), please contact us and we'll review your case.</p>
+      <p><strong>Price changes:</strong> We'll give at least 30 days' notice before changing subscription prices. Continued use after a price change takes effect constitutes acceptance of the new pricing.</p>
+    </section>
+
+    <hr class="divider">
+
+    <!-- 4. Lifetime Membership -->
+    <section class="legal-section" id="lifetime">
+      <span class="section-number">04</span>
+      <h2 class="section-title">Lifetime Membership</h2>
+      <p>We offer a one-time payment option called "Lifetime" or "Founding Member" access. This grants you access to Shiloh Watch for as long as the product exists and remains commercially operated, subject to the terms below.</p>
+      <p><strong>What's included:</strong> Lifetime members receive the tier of access described at the time of purchase, and any improvements or feature additions made to that tier over time.</p>
+      <p><strong>What "lifetime" means:</strong> Lifetime access refers to the lifetime of the Shiloh Watch product, not your personal lifetime. If ForeShiloh Ltd ceases to operate Shiloh Watch as a commercial product, lifetime access ends with it. We'll provide at least 90 days' notice in such a scenario.</p>
+      <p><strong>No refunds:</strong> Lifetime memberships are non-refundable after 14 days from the date of purchase. Within the first 14 days, if the service doesn't meet your expectations, contact us and we'll review your request.</p>
+      <p><strong>Transferability:</strong> Lifetime memberships are personal and non-transferable. They cannot be sold, gifted, or assigned to another person.</p>
+      <p><strong>Material changes:</strong> If we significantly reduce the features available to lifetime members compared to what was offered at the time of purchase, we'll offer a pro-rata refund for the remaining expected value, calculated reasonably.</p>
+    </section>
+
+    <hr class="divider">
+
+    <!-- 5. Acceptable Use -->
+    <section class="legal-section" id="acceptable-use">
+      <span class="section-number">05</span>
+      <h2 class="section-title">Acceptable Use</h2>
+      <p>You may use Shiloh Watch for your own personal trading analysis and research. You agree not to:</p>
+      <ul>
+        <li>Redistribute, resell, or sublicense access to the service to third parties</li>
+        <li>Scrape, extract, or systematically copy data from the platform</li>
+        <li>Use the service to provide financial advice or trading signals to others as a regulated or unregulated service</li>
+        <li>Attempt to reverse-engineer, decompile, or access the underlying source code</li>
+        <li>Introduce malware, viruses, or any harmful code</li>
+        <li>Use automated tools to access the service in ways that circumvent rate limits or access controls</li>
+        <li>Misrepresent Shiloh Watch output as your own original analysis when sharing publicly</li>
+        <li>Use the service in any way that violates applicable law, including financial services regulations in your jurisdiction</li>
+      </ul>
+      <p>Violation of acceptable use policies may result in immediate account suspension or termination without refund.</p>
+    </section>
+
+    <hr class="divider">
+
+    <!-- 6. IP -->
+    <section class="legal-section" id="ip">
+      <span class="section-number">06</span>
+      <h2 class="section-title">Intellectual Property</h2>
+      <p>All content on Shiloh Watch, including the software, algorithms, design, graphics, text, and analytical methodology, is the property of ForeShiloh Ltd or its licensors. These materials are protected by UK and international copyright, trademark, and other intellectual property laws.</p>
+      <p>Your subscription grants you a limited, personal, non-exclusive, non-transferable licence to access and use the service for your own trading analysis. Nothing in these terms transfers ownership of any intellectual property to you.</p>
+      <p>If you share screenshots or summaries of Shiloh Watch outputs (for example, on social media), please credit Shiloh Watch. You may not reproduce substantial portions of the platform's output commercially or in a way that competes with the service.</p>
+    </section>
+
+    <hr class="divider">
+
+    <!-- 7. Liability -->
+    <section class="legal-section" id="liability">
+      <span class="section-number">07</span>
+      <h2 class="section-title">Limitation of Liability</h2>
+      <div class="warning-box">
+        <p><strong>Trading involves substantial risk of financial loss.</strong> Shiloh Watch provides analytical data only. We are not responsible for any trading losses, financial harm, or investment decisions made using our platform.</p>
+      </div>
+      <p>To the fullest extent permitted by applicable law, ForeShiloh Ltd expressly excludes liability for:</p>
+      <ul>
+        <li>Any trading losses or financial loss of any kind arising from use of the service</li>
+        <li>Decisions made based on analysis, scores, or data shown on the platform</li>
+        <li>Inaccuracies in market data, delays in data feeds, or technical errors</li>
+        <li>Loss of profit, revenue, opportunity, or anticipated savings</li>
+        <li>Indirect, consequential, special, or incidental damages of any nature</li>
+        <li>Service interruptions, downtime, or data loss</li>
+      </ul>
+      <p>Where liability cannot be excluded by law (for example, for death or personal injury caused by our negligence, or fraud), we don't seek to limit it. In all other cases, our total liability to you in any calendar year is limited to the total amount you've paid to us during that year, or £100, whichever is greater.</p>
+      <p>The service is provided "as is" and "as available." We don't warrant that it will be error-free, uninterrupted, or fit for any particular purpose. Backtesting results reflect historical data and don't guarantee future performance.</p>
+    </section>
+
+    <hr class="divider">
+
+    <!-- 8. Termination -->
+    <section class="legal-section" id="termination">
+      <span class="section-number">08</span>
+      <h2 class="section-title">Termination</h2>
+      <p>You can stop using Shiloh Watch at any time and cancel your subscription through your account settings.</p>
+      <p>We reserve the right to suspend or terminate your account if:</p>
+      <ul>
+        <li>You breach these Terms of Service</li>
+        <li>You engage in fraudulent, abusive, or illegal activity</li>
+        <li>Your subscription payment repeatedly fails</li>
+        <li>We're required to do so by law or regulatory authority</li>
+      </ul>
+      <p>Where possible, we'll give you notice before termination and an opportunity to address the issue. In cases of serious breach or fraud, we may act immediately.</p>
+      <p>On termination, your licence to use the service ends. We may retain certain data in accordance with our Privacy Policy and legal obligations.</p>
+    </section>
+
+    <hr class="divider">
+
+    <!-- 9. Changes -->
+    <section class="legal-section" id="changes">
+      <span class="section-number">09</span>
+      <h2 class="section-title">Changes to Terms</h2>
+      <p>We may update these Terms of Service from time to time. We'll notify you of material changes by email and by posting an updated version on this page with a revised "last updated" date.</p>
+      <p>For significant changes, we'll give at least 14 days' notice before they take effect. Your continued use of Shiloh Watch after the effective date means you accept the updated terms.</p>
+      <p>If you don't agree with changes to the terms, you should cancel your subscription before the effective date and stop using the service.</p>
+    </section>
+
+    <hr class="divider">
+
+    <!-- 10. Governing Law -->
+    <section class="legal-section" id="governing-law">
+      <span class="section-number">10</span>
+      <h2 class="section-title">Governing Law</h2>
+      <p>These Terms of Service are governed by the laws of England and Wales. Any disputes arising from these terms or your use of Shiloh Watch shall be subject to the exclusive jurisdiction of the courts of England and Wales.</p>
+      <p>If you're a consumer based in another part of the UK (Scotland or Northern Ireland), you may also have rights under the laws of your jurisdiction.</p>
+      <p>Nothing in these terms affects your statutory rights as a consumer under UK law, including rights under the Consumer Rights Act 2015.</p>
+    </section>
+
+    <hr class="divider">
+
+    <!-- 11. Contact -->
+    <section class="legal-section" id="contact">
+      <span class="section-number">11</span>
+      <h2 class="section-title">Contact</h2>
+      <p>For questions about these terms, please contact us:</p>
+      <ul>
+        <li>Email: <a href="mailto:hello@foreshiloh.com" style="color: var(--green);">hello@foreshiloh.com</a></li>
+        <li>Company: ForeShiloh Ltd</li>
+        <li>Location: Sheffield, UK</li>
+        <li>Website: <a href="https://shilohwatch.com" style="color: var(--green);">shilohwatch.com</a></li>
+      </ul>
+      <p>We aim to respond to all legal enquiries within 5 business days.</p>
+    </section>
+
+  </div>
+</main>
+
+<!-- Footer -->
+<footer class="footer">
+  <div class="footer-inner">
+    <p class="footer-copy">&copy; 2026 ForeShiloh Ltd. Registered in England and Wales. Sheffield, UK.</p>
+    <nav class="footer-links">
+      <a href="/terms.html">Terms</a>
+      <a href="/privacy.html">Privacy</a>
+      <a href="/risk.html">Risk Disclaimer</a>
+      <a href="/affiliate.html">Affiliates</a>
+    </nav>
+  </div>
+</footer>
+
+</body>
+</html>

@@ -1,0 +1,562 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Privacy Policy | Shiloh Watch</title>
+<meta name="description" content="Privacy Policy for Shiloh Watch by ForeShiloh Ltd. UK GDPR compliant. ICO registered.">
+<meta name="robots" content="noindex, follow">
+<link rel="icon" type="image/svg+xml" href="/favicon.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;1,400&family=Cormorant+Garamond:ital,wght@0,400;0,500;1,400&family=Manrope:wght@200;300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; -webkit-font-smoothing: antialiased; }
+  ::selection { background: rgba(212, 188, 120, 0.3); color: inherit; }
+
+  :root {
+    --deep: #091A12;
+    --navy: #0C2E1F;
+    --green: #0A3D2E;
+    --green-mid: #1A6B4A;
+    --gold: #D4BC78;
+    --gold-light: #E0CFA0;
+    --cream: #FAF8F4;
+    --cream-warm: #F5F0E8;
+    --stone: #E8E3DA;
+    --charcoal: #1C1C1C;
+    --slate: #6B7280;
+  }
+
+  body {
+    font-family: 'Manrope', system-ui, sans-serif;
+    background: var(--cream);
+    color: var(--charcoal);
+    overflow-x: hidden;
+  }
+
+  body::after {
+    content: ''; position: fixed; inset: 0; z-index: 9999; pointer-events: none; opacity: 0.018;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+  }
+
+  /* Nav */
+  .nav {
+    background: var(--deep);
+    border-bottom: 1px solid rgba(255,255,255,0.06);
+  }
+  .nav-inner {
+    max-width: 1200px; margin: 0 auto; padding: 0 24px;
+    height: 72px; display: flex; align-items: center; justify-content: space-between;
+  }
+  @media (min-width: 768px) { .nav-inner { padding: 0 48px; height: 80px; } }
+
+  .nav-logo {
+    display: flex; align-items: center; gap: 10px; text-decoration: none;
+  }
+  .nav-logo-mark {
+    width: 32px; height: 32px; background: var(--gold); border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'Playfair Display', serif; font-size: 14px; color: var(--deep); font-weight: 600;
+  }
+  .nav-logo-text {
+    font-family: 'Playfair Display', serif; font-size: 18px; color: var(--cream); letter-spacing: 0.02em;
+  }
+
+  .nav-back {
+    font-size: 12px; font-weight: 400; letter-spacing: 0.08em;
+    color: rgba(250, 248, 244, 0.5); text-decoration: none; transition: color 0.3s;
+    display: flex; align-items: center; gap: 6px;
+  }
+  .nav-back:hover { color: var(--gold); }
+  .nav-back svg { width: 14px; height: 14px; }
+
+  /* Page header */
+  .page-header {
+    background: var(--deep);
+    padding: 64px 0 56px;
+  }
+  .page-header .container {
+    max-width: 800px; margin: 0 auto; padding: 0 24px;
+  }
+  @media (min-width: 768px) { .page-header .container { padding: 0 48px; } }
+
+  .page-label {
+    font-size: 10px; font-weight: 500; text-transform: uppercase; letter-spacing: 0.3em;
+    color: var(--gold); margin-bottom: 16px; display: block;
+  }
+  .page-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(32px, 5vw, 48px);
+    font-weight: 500; color: var(--cream);
+    line-height: 1.15; margin-bottom: 16px;
+  }
+  .page-meta {
+    font-size: 13px; color: rgba(250, 248, 244, 0.45); font-weight: 300; letter-spacing: 0.02em;
+  }
+
+  /* Content */
+  .content-wrap {
+    max-width: 800px; margin: 0 auto; padding: 64px 24px 96px;
+  }
+  @media (min-width: 768px) { .content-wrap { padding: 72px 48px 96px; } }
+
+  .toc {
+    background: white; border: 1px solid var(--stone); border-radius: 12px;
+    padding: 28px 32px; margin-bottom: 56px;
+  }
+  .toc-title {
+    font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.25em;
+    color: var(--slate); margin-bottom: 16px;
+  }
+  .toc ol {
+    list-style: none; counter-reset: toc-counter;
+    display: grid; grid-template-columns: 1fr; gap: 8px;
+  }
+  @media (min-width: 600px) { .toc ol { grid-template-columns: 1fr 1fr; } }
+  .toc ol li {
+    counter-increment: toc-counter;
+    font-size: 13px; color: var(--slate);
+  }
+  .toc ol li::before {
+    content: counter(toc-counter, decimal-leading-zero) ". ";
+    color: var(--gold); font-weight: 600; font-size: 11px; margin-right: 4px;
+  }
+  .toc ol li a {
+    color: var(--slate); text-decoration: none; transition: color 0.2s;
+  }
+  .toc ol li a:hover { color: var(--green); }
+
+  .legal-section {
+    margin-bottom: 52px; padding-top: 8px;
+  }
+  .section-number {
+    font-size: 10px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.3em;
+    color: var(--gold); margin-bottom: 10px; display: block;
+  }
+  .section-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 22px; font-weight: 500; color: var(--charcoal);
+    margin-bottom: 20px; line-height: 1.3;
+  }
+  .legal-section p {
+    font-size: 15px; line-height: 1.8; color: #3A3A3A;
+    margin-bottom: 16px; font-weight: 300;
+  }
+  .legal-section p:last-child { margin-bottom: 0; }
+  .legal-section ul, .legal-section ol {
+    margin: 16px 0 16px 0; padding-left: 0; list-style: none;
+  }
+  .legal-section ul li, .legal-section ol li {
+    font-size: 15px; line-height: 1.7; color: #3A3A3A;
+    font-weight: 300; padding: 6px 0 6px 20px; position: relative;
+  }
+  .legal-section ul li::before {
+    content: ''; position: absolute; left: 0; top: 14px;
+    width: 5px; height: 5px; border-radius: 50%; background: var(--gold);
+  }
+  .legal-section ol { counter-reset: list-counter; }
+  .legal-section ol li { counter-increment: list-counter; }
+  .legal-section ol li::before {
+    content: counter(list-counter) ".";
+    position: absolute; left: 0; color: var(--gold); font-weight: 600; font-size: 13px;
+  }
+
+  .notice-box {
+    background: #FFF8E7; border: 1px solid rgba(212, 188, 120, 0.4); border-left: 3px solid var(--gold);
+    border-radius: 8px; padding: 20px 24px; margin: 24px 0;
+  }
+  .notice-box p {
+    font-size: 14px; line-height: 1.7; color: var(--charcoal); font-weight: 400; margin: 0;
+  }
+  .notice-box strong { color: var(--green); }
+
+  .info-box {
+    background: #F0F7F4; border: 1px solid rgba(10, 61, 46, 0.15); border-left: 3px solid var(--green);
+    border-radius: 8px; padding: 20px 24px; margin: 24px 0;
+  }
+  .info-box p {
+    font-size: 14px; line-height: 1.7; color: var(--charcoal); font-weight: 400; margin: 0;
+  }
+
+  .rights-grid {
+    display: grid; grid-template-columns: 1fr; gap: 16px; margin: 24px 0;
+  }
+  @media (min-width: 560px) { .rights-grid { grid-template-columns: 1fr 1fr; } }
+
+  .right-card {
+    background: white; border: 1px solid var(--stone); border-radius: 10px; padding: 20px 22px;
+  }
+  .right-card-title {
+    font-size: 13px; font-weight: 600; color: var(--green); margin-bottom: 8px;
+    text-transform: uppercase; letter-spacing: 0.06em;
+  }
+  .right-card p {
+    font-size: 13px; line-height: 1.6; color: var(--slate); margin: 0; font-weight: 300;
+  }
+
+  .data-table {
+    width: 100%; border-collapse: collapse; margin: 20px 0; font-size: 14px;
+  }
+  .data-table th {
+    text-align: left; padding: 12px 16px; background: var(--green);
+    color: var(--cream); font-weight: 500; font-size: 12px; letter-spacing: 0.05em;
+  }
+  .data-table th:first-child { border-radius: 8px 0 0 0; }
+  .data-table th:last-child { border-radius: 0 8px 0 0; }
+  .data-table td {
+    padding: 12px 16px; border-bottom: 1px solid var(--stone);
+    color: #3A3A3A; font-weight: 300; line-height: 1.5; vertical-align: top;
+  }
+  .data-table tr:last-child td { border-bottom: none; }
+  .data-table tr:nth-child(even) td { background: rgba(250, 248, 244, 0.6); }
+
+  .divider {
+    border: none; border-top: 1px solid var(--stone); margin: 0 0 52px;
+  }
+
+  /* Footer */
+  .footer {
+    background: var(--deep); border-top: 1px solid rgba(255,255,255,0.06);
+    padding: 40px 0;
+  }
+  .footer-inner {
+    max-width: 1200px; margin: 0 auto; padding: 0 24px;
+    display: flex; flex-direction: column; align-items: center; gap: 16px; text-align: center;
+  }
+  @media (min-width: 768px) {
+    .footer-inner { flex-direction: row; justify-content: space-between; text-align: left; padding: 0 48px; }
+  }
+  .footer-copy {
+    font-size: 12px; color: rgba(250, 248, 244, 0.35); font-weight: 300;
+  }
+  .footer-links {
+    display: flex; gap: 24px; flex-wrap: wrap; justify-content: center;
+  }
+  .footer-links a {
+    font-size: 12px; color: rgba(250, 248, 244, 0.4); text-decoration: none; transition: color 0.3s;
+  }
+  .footer-links a:hover { color: var(--gold); }
+</style>
+</head>
+<body>
+
+<!-- Nav -->
+<nav class="nav">
+  <div class="nav-inner">
+    <a href="/" class="nav-logo">
+      <div class="nav-logo-mark">SW</div>
+      <span class="nav-logo-text">Shiloh Watch</span>
+    </a>
+    <a href="/" class="nav-back">
+      <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5">
+        <path d="M10 12L6 8l4-4"/>
+      </svg>
+      Back to site
+    </a>
+  </div>
+</nav>
+
+<!-- Page Header -->
+<header class="page-header">
+  <div class="container">
+    <span class="page-label">Legal</span>
+    <h1 class="page-title">Privacy Policy</h1>
+    <p class="page-meta">Last updated: 2 April 2026 &nbsp;|&nbsp; ForeShiloh Ltd &nbsp;|&nbsp; UK GDPR compliant</p>
+  </div>
+</header>
+
+<!-- Content -->
+<main>
+  <div class="content-wrap">
+
+    <div class="notice-box">
+      <p><strong>Short version:</strong> We collect only what we need to run the service. We don't sell your data. We don't use tracking cookies. We use Plausible for privacy-friendly analytics. You have full rights over your data under UK GDPR.</p>
+    </div>
+
+    <!-- Table of contents -->
+    <div class="toc">
+      <div class="toc-title">Contents</div>
+      <ol>
+        <li><a href="#who-we-are">Who We Are</a></li>
+        <li><a href="#data-collected">Data We Collect</a></li>
+        <li><a href="#legal-basis">Legal Basis</a></li>
+        <li><a href="#how-we-use">How We Use Your Data</a></li>
+        <li><a href="#third-parties">Third Parties</a></li>
+        <li><a href="#retention">Data Retention</a></li>
+        <li><a href="#your-rights">Your Rights</a></li>
+        <li><a href="#cookies">Cookies</a></li>
+        <li><a href="#security">Security</a></li>
+        <li><a href="#ico">ICO Registration</a></li>
+        <li><a href="#contact">Data Requests and Contact</a></li>
+      </ol>
+    </div>
+
+    <!-- 1. Who we are -->
+    <section class="legal-section" id="who-we-are">
+      <span class="section-number">01</span>
+      <h2 class="section-title">Who We Are</h2>
+      <p>ForeShiloh Ltd is the data controller for personal data collected through Shiloh Watch (shilohwatch.com). We're a company registered in England and Wales, based in Sheffield, UK.</p>
+      <p>This Privacy Policy explains how we collect, use, and protect your personal data when you use our service, and what rights you have under the UK General Data Protection Regulation (UK GDPR) and the Data Protection Act 2018.</p>
+      <p>If you have questions about this policy or how we handle your data, contact us at <a href="mailto:hello@foreshiloh.com" style="color: var(--green);">hello@foreshiloh.com</a>.</p>
+    </section>
+
+    <hr class="divider">
+
+    <!-- 2. Data collected -->
+    <section class="legal-section" id="data-collected">
+      <span class="section-number">02</span>
+      <h2 class="section-title">Data We Collect</h2>
+
+      <table class="data-table">
+        <thead>
+          <tr>
+            <th>Category</th>
+            <th>What we collect</th>
+            <th>How it's collected</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>Account data</strong></td>
+            <td>Email address, name (if provided), account preferences</td>
+            <td>When you register</td>
+          </tr>
+          <tr>
+            <td><strong>Payment data</strong></td>
+            <td>Subscription status, billing history (card details handled by Stripe, not us)</td>
+            <td>When you subscribe</td>
+          </tr>
+          <tr>
+            <td><strong>Usage data</strong></td>
+            <td>Pages visited, features used, session duration (anonymised via Plausible)</td>
+            <td>Automatically during use</td>
+          </tr>
+          <tr>
+            <td><strong>Communications</strong></td>
+            <td>Messages you send us (support, feedback)</td>
+            <td>When you contact us</td>
+          </tr>
+          <tr>
+            <td><strong>Technical data</strong></td>
+            <td>Browser type, device type, country (no IP stored by Plausible)</td>
+            <td>Automatically during use</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <p>We don't collect sensitive personal data (such as health information, financial status beyond billing, or biometric data). We don't collect data about your actual trades or brokerage accounts.</p>
+    </section>
+
+    <hr class="divider">
+
+    <!-- 3. Legal basis -->
+    <section class="legal-section" id="legal-basis">
+      <span class="section-number">03</span>
+      <h2 class="section-title">Legal Basis for Processing</h2>
+      <p>Under UK GDPR, we must have a lawful basis for processing your personal data. We rely on the following:</p>
+      <ul>
+        <li><strong>Contract performance:</strong> Processing your account data and payment information to provide the service you've subscribed to</li>
+        <li><strong>Legitimate interests:</strong> Analysing aggregate usage patterns to improve the service, detecting fraud, and maintaining security</li>
+        <li><strong>Legal obligation:</strong> Retaining billing records as required by UK tax law</li>
+        <li><strong>Consent:</strong> Sending you marketing emails (you can withdraw consent at any time)</li>
+      </ul>
+      <p>Where we rely on legitimate interests, we've assessed that our interests don't override your rights and freedoms. You can request details of this assessment by contacting us.</p>
+    </section>
+
+    <hr class="divider">
+
+    <!-- 4. How we use data -->
+    <section class="legal-section" id="how-we-use">
+      <span class="section-number">04</span>
+      <h2 class="section-title">How We Use Your Data</h2>
+      <p>We use your data to:</p>
+      <ul>
+        <li>Create and manage your account</li>
+        <li>Process subscription payments and manage billing</li>
+        <li>Provide customer support and respond to your enquiries</li>
+        <li>Send you service-related emails (account confirmation, payment receipts, important notices)</li>
+        <li>Send you product updates or marketing emails (where you've given consent, with an opt-out on every email)</li>
+        <li>Improve the service by understanding how it's used in aggregate</li>
+        <li>Detect and prevent fraud, abuse, and security incidents</li>
+        <li>Comply with legal obligations</li>
+      </ul>
+      <p>We don't use your data for automated decision-making that has a legal or significant effect on you. We don't sell your data to third parties. Ever.</p>
+    </section>
+
+    <hr class="divider">
+
+    <!-- 5. Third parties -->
+    <section class="legal-section" id="third-parties">
+      <span class="section-number">05</span>
+      <h2 class="section-title">Third Parties</h2>
+      <p>We work with a small number of trusted services to run Shiloh Watch. Here's who they are and what they do with data:</p>
+
+      <table class="data-table">
+        <thead>
+          <tr>
+            <th>Provider</th>
+            <th>Purpose</th>
+            <th>Data shared</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>Stripe</strong></td>
+            <td>Payment processing</td>
+            <td>Email, billing info. Stripe stores card details; we don't. <a href="https://stripe.com/gb/privacy" style="color: var(--green);" target="_blank" rel="noopener">Stripe Privacy Policy</a></td>
+          </tr>
+          <tr>
+            <td><strong>Plausible Analytics</strong></td>
+            <td>Privacy-friendly website analytics</td>
+            <td>No personal data. No cookies. No IP addresses stored. EU-hosted. <a href="https://plausible.io/privacy" style="color: var(--green);" target="_blank" rel="noopener">Plausible Privacy Policy</a></td>
+          </tr>
+          <tr>
+            <td><strong>Email provider</strong></td>
+            <td>Transactional and marketing emails</td>
+            <td>Email address and name (if provided)</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <p>We only share data with third parties who have agreed to handle it in accordance with UK GDPR. We don't share data with advertisers, data brokers, or analytics platforms that track individuals across the web.</p>
+      <p>If we're ever required to disclose data by law (for example, in response to a court order), we'll notify you unless legally prohibited from doing so.</p>
+    </section>
+
+    <hr class="divider">
+
+    <!-- 6. Retention -->
+    <section class="legal-section" id="retention">
+      <span class="section-number">06</span>
+      <h2 class="section-title">Data Retention</h2>
+      <p>We retain your data for as long as your account is active, plus a reasonable period after closure to handle any outstanding queries or disputes. Specific retention periods:</p>
+      <ul>
+        <li><strong>Account data:</strong> Kept for the duration of your account, then deleted within 90 days of account closure (unless a legal hold applies)</li>
+        <li><strong>Billing records:</strong> Retained for 7 years as required by UK tax law (HMRC requirements)</li>
+        <li><strong>Support communications:</strong> Retained for 2 years, then deleted</li>
+        <li><strong>Analytics data:</strong> Plausible retains aggregate (non-personal) analytics indefinitely for trend analysis</li>
+      </ul>
+      <p>When your data reaches the end of its retention period, it's securely deleted or anonymised.</p>
+    </section>
+
+    <hr class="divider">
+
+    <!-- 7. Your rights -->
+    <section class="legal-section" id="your-rights">
+      <span class="section-number">07</span>
+      <h2 class="section-title">Your Rights Under UK GDPR</h2>
+      <p>You have the following rights regarding your personal data. To exercise any of them, contact us at <a href="mailto:hello@foreshiloh.com" style="color: var(--green);">hello@foreshiloh.com</a>. We'll respond within 30 days.</p>
+
+      <div class="rights-grid">
+        <div class="right-card">
+          <div class="right-card-title">Right of Access</div>
+          <p>Request a copy of the personal data we hold about you (a Subject Access Request).</p>
+        </div>
+        <div class="right-card">
+          <div class="right-card-title">Right to Rectification</div>
+          <p>Ask us to correct inaccurate or incomplete data about you.</p>
+        </div>
+        <div class="right-card">
+          <div class="right-card-title">Right to Erasure</div>
+          <p>Ask us to delete your personal data ("right to be forgotten"), subject to legal retention requirements.</p>
+        </div>
+        <div class="right-card">
+          <div class="right-card-title">Right to Portability</div>
+          <p>Request your data in a structured, machine-readable format to transfer to another service.</p>
+        </div>
+        <div class="right-card">
+          <div class="right-card-title">Right to Restrict Processing</div>
+          <p>Ask us to pause processing your data in certain circumstances.</p>
+        </div>
+        <div class="right-card">
+          <div class="right-card-title">Right to Object</div>
+          <p>Object to processing based on legitimate interests, including marketing.</p>
+        </div>
+      </div>
+
+      <div class="info-box">
+        <p>If you're not satisfied with how we handle your data request, you have the right to lodge a complaint with the Information Commissioner's Office (ICO): <strong>ico.org.uk</strong> or call 0303 123 1113.</p>
+      </div>
+    </section>
+
+    <hr class="divider">
+
+    <!-- 8. Cookies -->
+    <section class="legal-section" id="cookies">
+      <span class="section-number">08</span>
+      <h2 class="section-title">Cookies</h2>
+      <p>We keep our cookie usage minimal. Here's exactly what we use:</p>
+      <ul>
+        <li><strong>Session cookies:</strong> Essential for keeping you logged in during a visit. These are deleted when you close your browser.</li>
+        <li><strong>Authentication cookies:</strong> To remember your login session across visits (these expire after a set period or on logout).</li>
+      </ul>
+      <p>We don't use advertising cookies, tracking cookies, or third-party cookies that follow you around the web. Plausible Analytics, our analytics provider, is cookieless by design and doesn't set any cookies in your browser.</p>
+      <p>Because we only use essential cookies necessary for the service to function, we don't require a cookie consent banner. If that changes, we'll update this policy and add the appropriate notices.</p>
+    </section>
+
+    <hr class="divider">
+
+    <!-- 9. Security -->
+    <section class="legal-section" id="security">
+      <span class="section-number">09</span>
+      <h2 class="section-title">Security</h2>
+      <p>We take reasonable technical and organisational measures to protect your data against unauthorised access, loss, or disclosure. These include:</p>
+      <ul>
+        <li>HTTPS encryption across the entire site</li>
+        <li>Passwords stored using industry-standard hashing (never in plain text)</li>
+        <li>Payment data handled entirely by Stripe (we never see or store card details)</li>
+        <li>Access to production data limited to necessary personnel only</li>
+      </ul>
+      <p>No system is 100% secure. If we become aware of a security breach that affects your personal data, we'll notify you and the ICO as required by law, within 72 hours of becoming aware.</p>
+    </section>
+
+    <hr class="divider">
+
+    <!-- 10. ICO -->
+    <section class="legal-section" id="ico">
+      <span class="section-number">10</span>
+      <h2 class="section-title">ICO Registration</h2>
+      <p>ForeShiloh Ltd is registered with the Information Commissioner's Office (ICO) as required under the Data Protection Act 2018. We take our data protection obligations seriously and operate in accordance with UK GDPR principles.</p>
+      <p>If you have concerns about how we handle your data that we haven't been able to resolve, you can contact the ICO directly:</p>
+      <ul>
+        <li>Website: <a href="https://ico.org.uk" style="color: var(--green);" target="_blank" rel="noopener">ico.org.uk</a></li>
+        <li>Phone: 0303 123 1113</li>
+        <li>Post: Information Commissioner's Office, Wycliffe House, Water Lane, Wilmslow, Cheshire, SK9 5AF</li>
+      </ul>
+    </section>
+
+    <hr class="divider">
+
+    <!-- 11. Contact -->
+    <section class="legal-section" id="contact">
+      <span class="section-number">11</span>
+      <h2 class="section-title">Data Requests and Contact</h2>
+      <p>For any data protection requests or questions about this policy, please contact us:</p>
+      <ul>
+        <li>Email: <a href="mailto:hello@foreshiloh.com" style="color: var(--green);">hello@foreshiloh.com</a> (subject: "Data Request" or "Privacy Enquiry")</li>
+        <li>Company: ForeShiloh Ltd</li>
+        <li>Location: Sheffield, UK</li>
+      </ul>
+      <p>We'll respond to Subject Access Requests and other data rights requests within 30 days. In complex cases, we may extend this by up to two additional months, in which case we'll let you know within the first 30 days and explain why.</p>
+      <p>This Privacy Policy may be updated from time to time. We'll notify you of material changes by email. The "last updated" date at the top of this page always reflects the current version.</p>
+    </section>
+
+  </div>
+</main>
+
+<!-- Footer -->
+<footer class="footer">
+  <div class="footer-inner">
+    <p class="footer-copy">&copy; 2026 ForeShiloh Ltd. Registered in England and Wales. Sheffield, UK.</p>
+    <nav class="footer-links">
+      <a href="/terms.html">Terms</a>
+      <a href="/privacy.html">Privacy</a>
+      <a href="/risk.html">Risk Disclaimer</a>
+      <a href="/affiliate.html">Affiliates</a>
+    </nav>
+  </div>
+</footer>
+
+</body>
+</html>

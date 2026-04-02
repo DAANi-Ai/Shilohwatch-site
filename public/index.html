@@ -819,16 +819,15 @@
       <div>
         <div style="font-size: 10px; font-weight: 500; text-transform: uppercase; letter-spacing: 0.2em; color: rgba(10,61,46,0.2); margin-bottom: 16px;">Company</div>
         <ul style="list-style: none; padding: 0;">
-          <li style="margin-bottom: 10px;"><a href="#" style="font-size: 13px; color: rgba(250,248,244,0.4); text-decoration: none;">Contact</a></li>
-          <li><a href="#" style="font-size: 13px; color: rgba(250,248,244,0.4); text-decoration: none;">Affiliate Programme</a></li>
+          <li><a href="/affiliate.html" style="font-size: 13px; color: rgba(250,248,244,0.4); text-decoration: none; transition: color 0.3s;" onmouseover="this.style.color='var(--gold)'" onmouseout="this.style.color='rgba(250,248,244,0.4)'">Affiliate Programme</a></li>
         </ul>
       </div>
       <div>
         <div style="font-size: 10px; font-weight: 500; text-transform: uppercase; letter-spacing: 0.2em; color: rgba(10,61,46,0.2); margin-bottom: 16px;">Legal</div>
         <ul style="list-style: none; padding: 0;">
-          <li style="margin-bottom: 10px;"><a href="#" style="font-size: 13px; color: rgba(250,248,244,0.4); text-decoration: none;">Terms of Service</a></li>
-          <li style="margin-bottom: 10px;"><a href="#" style="font-size: 13px; color: rgba(250,248,244,0.4); text-decoration: none;">Privacy Policy</a></li>
-          <li><a href="#" style="font-size: 13px; color: rgba(250,248,244,0.4); text-decoration: none;">Risk Disclaimer</a></li>
+          <li style="margin-bottom: 10px;"><a href="/terms.html" style="font-size: 13px; color: rgba(250,248,244,0.4); text-decoration: none; transition: color 0.3s;" onmouseover="this.style.color='var(--gold)'" onmouseout="this.style.color='rgba(250,248,244,0.4)'">Terms of Service</a></li>
+          <li style="margin-bottom: 10px;"><a href="/privacy.html" style="font-size: 13px; color: rgba(250,248,244,0.4); text-decoration: none; transition: color 0.3s;" onmouseover="this.style.color='var(--gold)'" onmouseout="this.style.color='rgba(250,248,244,0.4)'">Privacy Policy</a></li>
+          <li><a href="/risk.html" style="font-size: 13px; color: rgba(250,248,244,0.4); text-decoration: none; transition: color 0.3s;" onmouseover="this.style.color='var(--gold)'" onmouseout="this.style.color='rgba(250,248,244,0.4)'">Risk Disclaimer</a></li>
         </ul>
       </div>
     </div>
@@ -890,25 +889,56 @@
   }, { threshold: 0.5 });
   document.querySelectorAll('.counter').forEach(el => counterObserver.observe(el));
 
-  // Waitlist form
-  document.getElementById('waitlistForm').addEventListener('submit', function(e) {
+  // Waitlist form — EmailOctopus integration
+  // TODO: Replace these with your real EmailOctopus credentials
+  const EO_API_KEY = 'YOUR_API_KEY_HERE';
+  const EO_LIST_ID = 'YOUR_LIST_ID_HERE';
+
+  document.getElementById('waitlistForm').addEventListener('submit', async function(e) {
     e.preventDefault();
-    const email = document.getElementById('waitlistEmail').value;
+    const emailInput = document.getElementById('waitlistEmail');
+    const email = emailInput.value.trim();
     const msg = document.getElementById('waitlistMsg');
     const btn = this.querySelector('button');
+    const originalText = btn.textContent;
+
     btn.disabled = true;
     btn.textContent = 'Joining...';
-    const waitlist = JSON.parse(localStorage.getItem('sw_waitlist') || '[]');
-    if (!waitlist.includes(email)) {
-      waitlist.push(email);
-      localStorage.setItem('sw_waitlist', JSON.stringify(waitlist));
-    }
-    setTimeout(function() {
-      msg.textContent = "You're on the list. We'll be in touch.";
+
+    try {
+      const res = await fetch(
+        `https://emailoctopus.com/api/1.6/lists/${EO_LIST_ID}/contacts`,
+        {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            api_key: EO_API_KEY,
+            email_address: email,
+            status: 'SUBSCRIBED',
+          }),
+        }
+      );
+      const data = await res.json();
+
+      if (res.ok || (data.error && data.error.code === 'MEMBER_EXISTS_WITH_EMAIL_ADDRESS')) {
+        emailInput.value = '';
+        msg.textContent = res.ok ? "You're on the list. We'll be in touch." : "You're already on the list!";
+        msg.style.display = 'block';
+        msg.style.color = 'var(--gold)';
+        btn.textContent = 'Joined ✓';
+      } else {
+        msg.textContent = 'Something went wrong. Please try again.';
+        msg.style.display = 'block';
+        msg.style.color = '#e57373';
+        btn.textContent = originalText;
+      }
+    } catch (err) {
+      msg.textContent = 'Could not connect. Please try again.';
       msg.style.display = 'block';
-      btn.textContent = 'Joined';
-      document.getElementById('waitlistEmail').value = '';
-    }, 800);
+      msg.style.color = '#e57373';
+      btn.textContent = originalText;
+    }
+    btn.disabled = false;
   });
 </script>
 </body>
