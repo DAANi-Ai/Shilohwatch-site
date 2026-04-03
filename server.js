@@ -46,6 +46,13 @@ function serveStatic(req, res) {
 }
 
 function handleSubscribe(req, res) {
+  // Check env vars are set
+  if (!EO_API_KEY || !EO_LIST_ID) {
+    res.writeHead(500, { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*' });
+    res.end(JSON.stringify({ error: 'Server misconfigured: missing EmailOctopus credentials' }));
+    return;
+  }
+
   let body = '';
   req.on('data', chunk => { body += chunk; });
   req.on('end', () => {
@@ -53,8 +60,14 @@ function handleSubscribe(req, res) {
     try {
       parsed = JSON.parse(body);
     } catch (e) {
-      res.writeHead(400, { 'Content-Type': 'application/json' });
+      res.writeHead(400, { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*' });
       res.end(JSON.stringify({ error: 'Invalid JSON' }));
+      return;
+    }
+
+    if (!parsed.email) {
+      res.writeHead(400, { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*' });
+      res.end(JSON.stringify({ error: 'Email required' }));
       return;
     }
 
@@ -66,9 +79,12 @@ function handleSubscribe(req, res) {
       status: 'SUBSCRIBED',
     });
 
+    const apiPath = `/api/1.6/lists/${EO_LIST_ID}/contacts`;
+    console.log(`[subscribe] POST emailoctopus.com${apiPath} for ${parsed.email}`);
+
     const options = {
       hostname: 'emailoctopus.com',
-      path: `/api/1.6/lists/${EO_LIST_ID}/contacts`,
+      path: apiPath,
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -80,17 +96,25 @@ function handleSubscribe(req, res) {
       let eoBody = '';
       eoRes.on('data', chunk => { eoBody += chunk; });
       eoRes.on('end', () => {
-        res.writeHead(eoRes.statusCode, {
+        console.log(`[subscribe] EmailOctopus responded ${eoRes.statusCode}: ${eoBody}`);
+        const headers = {
           'Content-Type': 'application/json',
           'Access-Control-Allow-Origin': '*',
-        });
-        res.end(eoBody);
+        };
+        if (eoBody) {
+          res.writeHead(eoRes.statusCode, headers);
+          res.end(eoBody);
+        } else {
+          res.writeHead(eoRes.statusCode, headers);
+          res.end(JSON.stringify({ ok: true }));
+        }
       });
     });
 
     eoReq.on('error', (e) => {
-      res.writeHead(500, { 'Content-Type': 'application/json' });
-      res.end(JSON.stringify({ error: 'Failed to reach EmailOctopus' }));
+      console.error(`[subscribe] Error: ${e.message}`);
+      res.writeHead(500, { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*' });
+      res.end(JSON.stringify({ error: 'Failed to reach EmailOctopus: ' + e.message }));
     });
 
     eoReq.write(postData);
@@ -110,7 +134,14 @@ const server = http.createServer((req, res) => {
     return;
   }
 
-  if (req.method === 'POST' && req.url === '/api/subscribe') {
+  if (req.method === 'GET' && req.url === '/api/health') {
+    res.writeHead(200, { 'Content-Type': 'application/json' });
+    res.end(JSON.stringify({
+      ok: true,
+      eo_key_set: !!EO_API_KEY,
+      eo_list_set: !!EO_LIST_ID,
+    }));
+  } else if (req.method === 'POST' && req.url === '/api/subscribe') {
     handleSubscribe(req, res);
   } else {
     serveStatic(req, res);
