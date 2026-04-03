@@ -704,29 +704,18 @@
     }
 
     try {
-      const res = await fetch(
-        'https://emailoctopus.com/api/1.6/lists/a0d31000-2f6d-11f1-8b10-ab30d27be5f8/contacts',
-        {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({
-            api_key: 'eo_21af05488bb3a961775af27e180f0d2a3a9e29dbacecaabc6839cf0b1c697d42',
-            email_address: email,
-            fields: { FirstName: name },
-            tags: ['affiliate'],
-            status: 'SUBSCRIBED',
-          })
-        }
-      );
+      const formData = new URLSearchParams();
+      formData.append('field_0', email);
+      formData.append('field_1', name);
 
-      const data = await res.json();
-      if (res.ok || (data.error && data.error.code === 'MEMBER_EXISTS_WITH_EMAIL_ADDRESS')) {
-        document.getElementById('aff-form').style.display = 'none';
-        document.getElementById('success-msg').classList.add('visible');
-      } else {
-        btn.textContent = 'Something went wrong. Try again.';
-        btn.disabled = false;
-      }
+      await fetch('https://emailoctopus.com/lists/a0d31000-2f6d-11f1-8b10-ab30d27be5f8/members/embedded/1.3/add', {
+        method: 'POST',
+        mode: 'no-cors',
+        body: formData,
+      });
+
+      document.getElementById('aff-form').style.display = 'none';
+      document.getElementById('success-msg').classList.add('visible');
     } catch (err) {
       document.getElementById('aff-form').style.display = 'none';
       document.getElementById('success-msg').classList.add('visible');
