@@ -704,14 +704,10 @@
     }
 
     try {
-      const formData = new URLSearchParams();
-      formData.append('field_0', email);
-      formData.append('field_1', name);
-
-      await fetch('https://emailoctopus.com/lists/a0d31000-2f6d-11f1-8b10-ab30d27be5f8/members/embedded/1.3/add', {
+      const res = await fetch('/api/subscribe', {
         method: 'POST',
-        mode: 'no-cors',
-        body: formData,
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email, name, tags: ['affiliate'] }),
       });
 
       document.getElementById('aff-form').style.display = 'none';

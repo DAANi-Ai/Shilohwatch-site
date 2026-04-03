@@ -8,3 +8,7 @@ services:
     envVars:
       - key: NODE_ENV
         value: production
+      - key: EO_API_KEY
+        sync: false
+      - key: EO_LIST_ID
+        sync: false

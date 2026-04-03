@@ -889,7 +889,7 @@
   }, { threshold: 0.5 });
   document.querySelectorAll('.counter').forEach(el => counterObserver.observe(el));
 
-  // Waitlist form — EmailOctopus embedded form endpoint (no CORS issues)
+  // Waitlist form — posts to /api/subscribe (server proxies to EmailOctopus)
   document.getElementById('waitlistForm').addEventListener('submit', async function(e) {
     e.preventDefault();
     const emailInput = document.getElementById('waitlistEmail');
@@ -902,21 +902,26 @@
     btn.textContent = 'Joining...';
 
     try {
-      const formData = new URLSearchParams();
-      formData.append('field_0', email);
-
-      await fetch('https://emailoctopus.com/lists/a0d31000-2f6d-11f1-8b10-ab30d27be5f8/members/embedded/1.3/add', {
+      const res = await fetch('/api/subscribe', {
         method: 'POST',
-        mode: 'no-cors',
-        body: formData,
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email }),
       });
+      const data = await res.json();
 
-      // no-cors means we can't read the response, but the signup goes through
-      emailInput.value = '';
-      msg.textContent = "You're on the list. We'll be in touch.";
-      msg.style.display = 'block';
-      msg.style.color = 'var(--gold)';
-      btn.textContent = 'Joined ✓';
+      if (res.ok || (data.error && data.error.code === 'MEMBER_EXISTS_WITH_EMAIL_ADDRESS')) {
+        emailInput.value = '';
+        msg.textContent = res.ok ? "You're on the list. We'll be in touch." : "You're already on the list!";
+        msg.style.display = 'block';
+        msg.style.color = 'var(--gold)';
+        btn.textContent = 'Joined ✓';
+      } else {
+        msg.textContent = 'Something went wrong. Please try again.';
+        msg.style.display = 'block';
+        msg.style.color = '#e57373';
+        btn.textContent = originalText;
+        btn.disabled = false;
+      }
     } catch (err) {
       msg.textContent = 'Could not connect. Please try again.';
       msg.style.display = 'block';
