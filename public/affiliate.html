@@ -704,19 +704,23 @@
     }
 
     try {
-      const res = await fetch('/api/waitlist', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          email,
-          name,
-          source: 'affiliate',
-          platform,
-          audience
-        })
-      });
+      const res = await fetch(
+        'https://emailoctopus.com/api/1.6/lists/a0d31000-2f6d-11f1-8b10-ab30d27be5f8/contacts',
+        {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            api_key: 'eo_21af05488bb3a961775af27e180f0d2a3a9e29dbacecaabc6839cf0b1c697d42',
+            email_address: email,
+            fields: { FirstName: name },
+            tags: ['affiliate'],
+            status: 'SUBSCRIBED',
+          })
+        }
+      );
 
-      if (res.ok) {
+      const data = await res.json();
+      if (res.ok || (data.error && data.error.code === 'MEMBER_EXISTS_WITH_EMAIL_ADDRESS')) {
         document.getElementById('aff-form').style.display = 'none';
         document.getElementById('success-msg').classList.add('visible');
       } else {
@@ -724,7 +728,6 @@
         btn.disabled = false;
       }
     } catch (err) {
-      // Fallback: just show success anyway so interested parties aren't blocked
       document.getElementById('aff-form').style.display = 'none';
       document.getElementById('success-msg').classList.add('visible');
     }
